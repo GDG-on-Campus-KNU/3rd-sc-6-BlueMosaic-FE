@@ -3,8 +3,6 @@ import CollectionSVG from "../assets/Collection.svg"
 import LoginSVG from "../assets/Login.svg"
 import RankingSVG from "../assets/Ranking.svg"
 import MypageSVG from "../assets/Mypage.svg"
-
-
 import styled from "@emotion/styled";
 
 
@@ -44,7 +42,7 @@ export const Sidebar = {
   item: ({ text, svg, onClick }:SidebarProps ) => {
     const SVGcomponent = getSVG(svg);
     return(
-      <StyledItem>
+      <StyledItem onClick={onClick}>
         <img src={SVGcomponent} alt="SVGcomponent"/>
         <span className="text">{text}</span>
         <LineGray/>

@@ -1,64 +1,79 @@
-import HomeSVG from "../assets/HomeSVG.svg"
-import CollectionSVG from "../assets/Collection.svg"
-import LoginSVG from "../assets/Login.svg"
-import RankingSVG from "../assets/Ranking.svg"
-import MypageSVG from "../assets/Mypage.svg"
+import React, { useState, useRef, useEffect } from 'react';
+import { TweenLite, Power3 } from 'gsap';
+import CollectionSVG from "../assets/Collection.svg";
+import LoginSVG from "../assets/Login.svg";
+import RankingSVG from "../assets/Ranking.svg";
+import MypageSVG from "../assets/Mypage.svg";
 import styled from "@emotion/styled";
 
-interface SidebarProps{
+interface SidebarProps {
   text: string;
   svg: string;
-  onClick?: ()=>void; 
+  onClick?: () => void;
 }
 
-const getSVG = (svg:string) =>{
-  switch(svg){
+const getSVG = (svg: string) => {
+  switch (svg) {
     case "Collection": return CollectionSVG;
     case "Login": return LoginSVG;
     case "Ranking": return RankingSVG;
     case "Mypage": return MypageSVG;
   }
-}
+};
 
 export const Sidebar = {
 
   wrapper: ({ children }) => {
+    const [expanded, setExpanded] = useState(false);
+    const sidebarRef = useRef(null);
+
+    const handleClick = () => {
+      setExpanded(!expanded);
+    };
+
+    useEffect(() => {
+      if (expanded) {
+        TweenLite.to(sidebarRef.current, 0.8, { height: 405, ease: Power3.easeOut });
+      } else {
+        TweenLite.to(sidebarRef.current, 0.8, { height: 105, ease: Power3.easeOut });
+      }
+    }, [expanded]);
+
     return (
-      <StyledWrapper>
+      <StyledWrapper onClick={handleClick} expanded={expanded} ref={sidebarRef}>
         {children}
       </StyledWrapper>
     );
   },
 
-  Container: ({ children })=>{
-    return(
+  Container: ({ children }) => {
+    return (
       <StyledContainer>
-        { children }
+        {children}
       </StyledContainer>
-    )
+    );
   },
 
-  item: ({ text, svg, onClick }:SidebarProps ) => {
+  item: ({ text, svg, onClick }: SidebarProps) => {
     const SVGcomponent = getSVG(svg);
-    return(
+    return (
       <StyledItem onClick={onClick}>
-      <div>
-        <img src={SVGcomponent} alt="SVGcomponent" />
-        <span className="text">{text}</span>
-      </div>
-      <LineGray />
-    </StyledItem>
-    )
+        <div>
+          <img src={SVGcomponent} alt="SVGcomponent" />
+          <span className="text">{text}</span>
+        </div>
+        <LineGray />
+      </StyledItem>
+    );
   },
 
-  title: ({ text }: { text:string }) => {
-    return(<StyledTitle>
+  title: ({ text }: { text: string }) => {
+    return (<StyledTitle>
       {text}
-      <Line/>
-    </StyledTitle>)
+      <Line />
+    </StyledTitle>);
   }
-}
-
+};
 
 const StyledContainer = styled.div`
   display: flex;
@@ -67,15 +82,15 @@ const StyledContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-`
+`;
 
 const Line = styled.div`
-width: 70%;
-display: flex;
-margin: 0 auto;
-flex-shrink: 0;
-border: 1px solid var(--font-color);
-`
+  width: 70%;
+  display: flex;
+  margin: 0 auto;
+  flex-shrink: 0;
+  border: 1px solid var(--font-color);
+`;
 
 const LineGray = styled.div`
   width: 70%;
@@ -84,19 +99,29 @@ const LineGray = styled.div`
   margin: 0.2rem 0 0 0;
 `;
 
-
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<{ expanded: boolean }>`
   width: 17.5rem;
-  height: 25rem;
+  height: ${(props) => (props.expanded ? '25rem' : '2.5rem')};
   flex-shrink: 0;
   background: var(--googleWhiteGray-color);
   border-radius: 0rem 0rem 0.625rem 0.625rem;
-`
+  cursor: pointer;
+  transition: height 0.8s ease;
+  position: absolute;  // 추가: absolute 위치 유지
+  top: 0;  // 필요에 따라 설정
+  left: 0;  // 필요에 따라 설정
+  overflow: hidden;
+  
+  &:hover {
+    height: ${(props) => (props.expanded ? '25.5rem' : '2.7rem')};
+    }
+  }
+`;
 
 const StyledItem = styled.div`
   display: inline-flex;
   flex-direction: column;
-  align-self: stretch;  
+  align-self: stretch;
   gap: 0.5rem;
   color: var(--font-color);
   font-family: Itim;
@@ -109,14 +134,13 @@ const StyledItem = styled.div`
     align-self: stretch;
     align-items: center;
     gap: 0.6875rem;
-    width: 100%; 
+    width: 100%;
   }
 
-  :hover{
+  :hover {
     background-color: #D4D4D4;
-    cursor: pointer; 
-    transition: background-color 0.3s ease; 
-    }
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
 `;
 

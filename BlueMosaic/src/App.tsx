@@ -9,10 +9,15 @@ import { Signin } from './pages/Signin'
 import { Signup } from './pages/Signup'
 import { Trash } from './pages/Trash'
 
+import { ThemeProvider } from '@emotion/react';
+import GlobalStyle from './styles/color';
+
 function App() {
 
   return (
     <>
+    <ThemeProvider theme={{}}>
+    <GlobalStyle />
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LandingPage/>}/>
@@ -26,6 +31,7 @@ function App() {
           <Route path='/signup' element={<Signup/>}/>
         </Routes>
       </BrowserRouter>
+      </ThemeProvider>
     </>
   )
 }

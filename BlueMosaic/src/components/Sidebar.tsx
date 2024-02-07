@@ -77,7 +77,6 @@ export const Sidebar = {
 
 const StyledContainer = styled.div`
   display: flex;
-  width: 15.625rem;
   padding: 0rem 0.75rem;
   flex-direction: column;
   align-items: center;
@@ -100,17 +99,19 @@ const LineGray = styled.div`
 `;
 
 const StyledWrapper = styled.div<{ expanded: boolean }>`
-  width: 17.5rem;
+  width: 20.5rem;
   height: ${(props) => (props.expanded ? '25rem' : '2.5rem')};
+  margin: 0 auto;
   flex-shrink: 0;
   background: var(--googleWhiteGray-color);
   border-radius: 0rem 0rem 0.625rem 0.625rem;
   cursor: pointer;
   transition: height 0.8s ease;
-  position: absolute;  // 추가: absolute 위치 유지
-  top: 0;  // 필요에 따라 설정
-  left: 0;  // 필요에 따라 설정
+  position: absolute;  
+  top: 0; 
+  left: 0;  
   overflow: hidden;
+  z-index: 100;
   
   &:hover {
     height: ${(props) => (props.expanded ? '25.5rem' : '2.7rem')};

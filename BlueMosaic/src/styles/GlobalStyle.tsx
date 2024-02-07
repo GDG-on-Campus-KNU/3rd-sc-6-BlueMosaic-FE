@@ -2,6 +2,7 @@ import { Global, css } from '@emotion/react';
 import RobotoRegular from "./Roboto-Regular.woff"
 import ItimRegular from "./Itim-Regular.woff"
 import PottaOneRegular from "./PottaOne-Regular.woff"
+import HomeSVG from '../assets/HomeSVG.svg'
 
 const GlobalStyle = () => (
   <Global
@@ -36,6 +37,15 @@ const GlobalStyle = () => (
         font-style: normal;
         font-weight: 400;
         src: local('Potta One'), local('PottaOne-Regular'), url(${PottaOneRegular}) format('woff');
+      }
+
+      body {
+        width: 100vw;
+        height: 100vh;
+        background-size: cover;
+        max-width: 1280px;
+        margin: 0 auto;
+        background: url(${HomeSVG})
       }
     `}
   />

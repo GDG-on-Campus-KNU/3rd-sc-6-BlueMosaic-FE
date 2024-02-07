@@ -10,7 +10,7 @@ import { Signup } from './pages/Signup'
 import { Trash } from './pages/Trash'
 
 import { ThemeProvider } from '@emotion/react';
-import GlobalStyle from './styles/color';
+import GlobalStyle from './styles/GlobalStyle';
 
 function App() {
 

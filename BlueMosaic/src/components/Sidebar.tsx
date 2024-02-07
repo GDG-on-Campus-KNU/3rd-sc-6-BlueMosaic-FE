@@ -71,9 +71,10 @@ const StyledContainer = styled.div`
 `
 
 const Line = styled.div`
+width: 70%;
+height: 1px;
 flex-shrink: 0;
 display: flex;
-width: 70%;
 margin: 0 auto;
 stroke-width: 1px;
 stroke: var(--font-color);

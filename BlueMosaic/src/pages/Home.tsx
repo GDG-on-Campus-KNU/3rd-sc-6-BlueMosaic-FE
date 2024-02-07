@@ -23,6 +23,12 @@ export const Home: React.FC = () => {
       case 'Login':
         navigate('/signin');
         break;
+      case 'Trash':
+        navigate('/trash');
+        break;
+      case 'Ocean':
+        navigate('/ocean');
+        break;
       default:
         break;
     }
@@ -45,6 +51,8 @@ export const Home: React.FC = () => {
                 </Sidebar.Container>
               </Sidebar.wrapper>
 
+              <ClickableArea onClick={() => handleClick('Trash')} />
+              <ClickableArea onClick={() => handleClick('Ocean')} isBottom />
 
               <Container>
                 <Image src={islandSVG} alt='island' />
@@ -78,4 +86,18 @@ const Container = styled.div`
 const Image = styled.img`
   width: 100%;
   height: auto;
+`;
+
+const ClickableArea = styled.div<{ isBottom?: boolean }>`
+  position: absolute;
+  width: 70%;
+  height: 50%;
+  max-width: 50rem; 
+  right: 2rem;
+  top: 10%;
+  transform: translateY(0%);
+  top: ${(props) => (props.isBottom ? '50%' : '0')};
+  background-color: transparent;
+  cursor: pointer;
+  z-index: 10;
 `;

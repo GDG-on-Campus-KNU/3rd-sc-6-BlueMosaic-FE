@@ -4,6 +4,7 @@ import HomeSVG from '../assets/HomeSVG.svg'
 import islandSVG from "../assets/islandSVG.svg"
 import { Sidebar } from '../components/Sidebar';
 import { useNavigate } from "react-router-dom"
+import styled from '@emotion/styled';
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -30,10 +31,10 @@ export const Home: React.FC = () => {
 
   return (
     <>
-      <WaterWave imageUrl={HomeSVG as string} style={{ width: '100vw', height: '100vh', backgroundSize: 'cover' }}>
+      <WaterWave imageUrl={HomeSVG}>
         {({ pause, play }) => (
           <>
-            <div className='Home-wrapper'>
+            <StyledWrapper>
               <Sidebar.wrapper>
                 <Sidebar.title text="BlueMosaic"/>
                 <Sidebar.Container>
@@ -43,11 +44,38 @@ export const Home: React.FC = () => {
                   <Sidebar.item text='Login' svg='Login' onClick={()=> handleClick('Login')}/>
                 </Sidebar.Container>
               </Sidebar.wrapper>
-              <img src={islandSVG} alt='island'/>
-            </div>
+
+
+              <Container>
+                <Image src={islandSVG} alt='island' />
+              </Container>
+            </StyledWrapper>
           </>
         )}
       </WaterWave>
     </>
   );
 };
+
+const StyledWrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+`
+
+const Container = styled.div`
+  display: flex;
+  position: absolute;
+  width: 80%;
+  max-width: 50rem; 
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-45%);
+  align-items: center;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  height: auto;
+`;

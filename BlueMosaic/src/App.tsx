@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { LandingPage } from './pages/LandingPage'
+import { LandingPage } from "./pages/LandingPage"
 import { Home } from './pages/Home'
 import { Mypage } from './pages/Mypage'
 import { Collection } from './pages/Collection'

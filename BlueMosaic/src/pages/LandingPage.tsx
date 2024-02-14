@@ -3,6 +3,7 @@ import firstSVG from "../assets/First.svg";
 import secondSVG from "../assets/Second.svg";
 import thirdSVG from "../assets/Third.svg";
 import Play from "../assets/Play.svg"
+import React, { useState } from 'react';
 
 const Content = ({ title, subtitle }: { title: string; subtitle: string }) => (
   <ContentWrapper>
@@ -67,7 +68,7 @@ const ContentWrapper = styled.div`
     font-weight: 700;
     line-height: 4.5rem;
     letter-spacing: -0.09375rem;
-    margin-bottom: 0rem;
+    margin-bottom: 1rem;
   }
 
   p {

@@ -1,6 +1,7 @@
 import React from 'react';
 import WaterWave from 'react-water-wave';
 import HomeSVG from '../assets/HomeSVG.svg'
+import { Container, Wrapper } from '../styles/Layout';
 import islandSVG from "../assets/islandSVG.svg"
 import { Sidebar } from '../components/Sidebar';
 import { useNavigate } from "react-router-dom"
@@ -37,9 +38,10 @@ export const Home: React.FC = () => {
 
   return (
     <>
+    <Wrapper backgroundImage={HomeSVG}>
       <WaterWave imageUrl={HomeSVG}>
         {({ pause, play }) => (
-          <>
+          <Container>
             <StyledWrapper>
               <Sidebar.wrapper>
                 <Sidebar.title text="BlueMosaic"/>
@@ -54,13 +56,14 @@ export const Home: React.FC = () => {
               <ClickableArea onClick={() => handleClick('Trash')} />
               <ClickableArea onClick={() => handleClick('Ocean')} isBottom />
 
-              <Container>
+              <HomeContainer>
                 <Image src={islandSVG} alt='island' />
-              </Container>
+              </HomeContainer>
             </StyledWrapper>
-          </>
+        </Container>
         )}
       </WaterWave>
+      </Wrapper>
     </>
   );
 };
@@ -72,7 +75,7 @@ const StyledWrapper = styled.div`
   align-items: center;
 `
 
-const Container = styled.div`
+const HomeContainer = styled.div`
   display: flex;
   position: absolute;
   width: 80%;

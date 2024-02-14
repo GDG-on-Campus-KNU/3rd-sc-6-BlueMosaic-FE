@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { LandingPage } from './pages/LandingPage'
+import { LandingPage } from "./pages/LandingPage"
 import { Home } from './pages/Home'
 import { Mypage } from './pages/Mypage'
 import { Collection } from './pages/Collection'
@@ -11,6 +11,7 @@ import { Trash } from './pages/Trash'
 
 import { ThemeProvider } from '@emotion/react';
 import GlobalStyle from './styles/GlobalStyle';
+import RedirectPage from './pages/RedirectPage'
 
 function App() {
 
@@ -29,6 +30,8 @@ function App() {
           <Route path='/rank' element={<Ranking/>}/>
           <Route path='/signin' element={<Signin/>}/>
           <Route path='/signup' element={<Signup/>}/>
+          <Route path='/signupRedirect' element={<RedirectPage/>}/>
+
         </Routes>
       </BrowserRouter>
       </ThemeProvider>

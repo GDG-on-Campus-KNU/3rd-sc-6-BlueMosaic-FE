@@ -43,7 +43,6 @@ const GlobalStyle = () => (
         width: 100vw;
         height: 100vh;
         background-size: cover;
-        max-width: 1280px;
         margin: 0 auto;
         background: url(${HomeSVG})
       }

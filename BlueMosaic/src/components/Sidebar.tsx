@@ -108,8 +108,7 @@ const StyledWrapper = styled.div<{ expanded: boolean }>`
   cursor: pointer;
   transition: height 0.8s ease;
   position: absolute;  
-  top: 0; 
-  left: 0;  
+  top: 0;  
   overflow: hidden;
   z-index: 100;
   

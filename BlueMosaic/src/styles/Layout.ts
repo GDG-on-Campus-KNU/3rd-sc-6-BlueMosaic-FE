@@ -1,11 +1,16 @@
 import styled from "@emotion/styled"
 import WaterWave from 'react-water-wave';
 
-export const Wrapper = styled.main(({ backgroundImage }: { backgroundImage: string }) => `
+export const Wrapper = styled.main`
   width: 100vw;
   height: 100vh;
-  background: url(${backgroundImage}); 
-`);
+  background: url(${props => props.backgroundImage});
+  background-size: cover; 
+  background-position: center; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const WrapperWave = styled(WaterWave)`
   width: 100vw;
@@ -20,6 +25,13 @@ export const Container = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+export const ResponsiveImage = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
 `;
 
 export const DivCenterContainter = styled.div`

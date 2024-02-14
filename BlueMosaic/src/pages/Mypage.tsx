@@ -1,6 +1,15 @@
+import MonitorSVG from "../assets/Monitor.svg"
+import { Wrapper, Container } from "../styles/Layout"
+import HomeSVG from "../assets/HomeSVG.svg"
+import { Dashboard } from "../components/dashboard/dashboard"
+
 export const Mypage = () => {
 
-  return(<>
-    Mypage
-  </>)
+  return(
+    <Wrapper backgroundImage={HomeSVG}>
+      <Container>
+        <Dashboard/>
+      </Container>
+    </Wrapper>
+  );
 }

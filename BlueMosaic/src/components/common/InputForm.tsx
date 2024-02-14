@@ -17,20 +17,21 @@ export const InputForm = ({ type, name, value, onChange, placeholder, title, ...
 };
 
 const InputFormWrapper = styled.div`
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-gap: 0.5rem;
-
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+  
   input{
     display: flex;
-    padding: 0.8125rem 14.3125rem 0.8125rem 1rem;
+    padding: 0.8125rem 14rem 0.8rem 1rem;
     align-items: center;
     border-radius: 0.5rem;
     border: 1px solid var(--Stroke, #DADADA);
   }
 
   span { 
+    display: flex;
     color: var(--1st-text, #4A4543);
     font-family: Roboto;
     font-style: normal;

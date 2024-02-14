@@ -74,20 +74,19 @@ export const DivCenterContainter = styled.div`
 
 
 export const DivContainer = styled.section`
+  box-sizing: border-box;
+  height: 100%;
   display: flex;
-  width: 37.5rem;
-  height: 64rem;
+  padding: 3rem 3rem 3rem 3rem;
   margin-left: auto; 
-  padding-top: 4.1875rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2rem;
   flex-shrink: 0;
   border-radius: 3.125rem 0rem 0rem 3.125rem;
   background: var(----white-color, #FFF);
 
-  
   button {
     border: none;
     background: none;

@@ -49,6 +49,7 @@ export const Signup = () => {
                 <button  onClick={handleGoogleLogin}>
                 <img src={GoogleBtn} alt="googleBtn"/>
                 </button>
+
               </DivContainer>
               </Container>
             </Wrapper>

@@ -38,16 +38,16 @@ export const Signup = () => {
               <img src={GoogleSVG} alt="google"/>
 
               {/* email */}
-              <InputForm title="Email" type="text" placeholder="Enter your Email" name="email" value={userInfo?.email} onChange={onChange} /> 
+              {/* <InputForm title="Email" type="text" placeholder="Enter your Email" name="email" value={userInfo?.email} onChange={onChange} /> 
 
               <InputForm title="Password" type="password" placeholder="Enter your Password" name="password" value={userInfo?.password} onChange={onChange} /> 
 
-              <InputForm title="Password Confirm" type="password" placeholder="Enter your Password Again" name="passwordConfirm" value={passwordConfirm} onChange={onChange} /> 
+              <InputForm title="Password Confirm" type="password" placeholder="Enter your Password Again" name="passwordConfirm" value={passwordConfirm} onChange={onChange} />  */}
 
               <InputForm title="Username" type="text" placeholder="Enter your Email" name="username" value={userInfo?.username} onChange={onChange} /> 
 
-                <button  onClick={handleGoogleLogin}>
-                <img src={GoogleBtn} alt="googleBtn"/>
+                <button onClick={handleGoogleLogin}>
+                  회원가입 완료
                 </button>
 
               </DivContainer>

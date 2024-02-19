@@ -35,8 +35,13 @@ export const Search = () => {
     FriendApis.add();
   }
 
-  const handleFriendList = (e) => {
-    FriendApis.find();
+  const handleFriendList = async () => {
+    try {
+      const data = await FriendApis.find();
+      setSearchList(data);
+    } catch (error) {
+      console.error('Error fetching friend list:', error);
+    }
   }
 
 

@@ -6,6 +6,8 @@ import islandSVG from "../assets/islandSVG.svg"
 import { Sidebar } from '../components/Sidebar';
 import { useNavigate } from "react-router-dom"
 import styled from '@emotion/styled';
+import { TestApis } from '../hooks/useQuery';
+import { UserApis } from '../hooks/useQuery2';
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -16,10 +18,12 @@ export const Home: React.FC = () => {
         navigate('/rank');
         break;
       case 'Collection':
-        navigate('/collection');
+        TestApis.test();
+        // navigate('/collection');
         break;
       case 'Mypage':
-        navigate('/mypage');
+        UserApis.changeNickName();
+        // navigate('/mypage');
         break;
       case 'Login':
         navigate('/signin');

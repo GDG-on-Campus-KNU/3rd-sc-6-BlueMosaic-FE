@@ -5,10 +5,14 @@ import MicSVG from "../../assets/Mic.svg"
 import CameraSVG from "../../assets/Camera.svg"
 import TimeSVG from "../../assets/Time.svg"
 import { UserApis } from '../../hooks/useUserQuery';
+import { useStore } from 'zustand';
+import { FriendInfoStore } from '../../stores/FriendStore';
+import { FriendApis } from '../../hooks/useFriendQuery';
 
 export const Search = () => {
   const [searchValue, setSearchValue] = useState('');
   const [searchList, setSearchList] = useState([]);
+  const friendInfo = useStore(FriendInfoStore);
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
@@ -26,6 +30,15 @@ export const Search = () => {
       handleSearchClick();
     }
   };
+
+  const handleAddFriend = (e) => {
+    FriendApis.add();
+  }
+
+  const handleFriendList = (e) => {
+    FriendApis.find();
+  }
+
 
 
   return(<>
@@ -59,8 +72,8 @@ export const Search = () => {
     </SearchBar>
 
       <ButtomButtons>
-        <button>Add Friend</button>
-        <button>Friend List</button>
+        <button onClick={handleAddFriend}>Add Friend</button>
+        <button onClick={handleFriendList}>Friend List</button>
       </ButtomButtons>
     </>
   )

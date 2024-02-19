@@ -1,8 +1,11 @@
 import axios from 'axios';
+import { useStore } from 'zustand';
+import { FriendInfoStore } from '../stores/FriendStore';
+import { UserInfoStore } from '../stores/UserInfoStore';
 
 const data = {
-  "userId": 1,
-  "friendUserId": 2
+  "userId": UserInfoStore.getState().userId,
+  "friendUserId": FriendInfoStore.getState().friendId
 }
 
 export const FriendApis = {
@@ -14,7 +17,7 @@ export const FriendApis = {
   // 친구추가 userId - friendUserId
   add: async () => {
     try {
-      // console.log(data);
+      console.log("sending", data);
       const res = await FriendApis.instance.post(
         '/friends', data );
       console.log(res);

@@ -8,6 +8,7 @@ import { useStore } from "zustand";
 import { UserInfoStore } from "../stores/UserInfoStore"
 import { useState } from "react";
 import { UserApis } from "../hooks/useUserQuery";
+import { useEffect } from "react"
 
 export const Signup = () => {
   const userInfo = useStore(UserInfoStore);
@@ -22,6 +23,22 @@ export const Signup = () => {
       case "username": userInfo.setUsername(value); 
     }
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await UserApis.get();
+        userInfo.setEmail(userData.email);
+        userInfo.setUserId(userData.id);
+        userInfo.setUsername(userData.nickname);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+  
+    fetchData(); 
+  
+  }, [userInfo]);
 
   const handleGoogleLogin = (event) => {
     event.preventDefault();

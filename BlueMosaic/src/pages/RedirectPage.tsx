@@ -9,7 +9,6 @@ const RedirectPage = () => {
   const navigate = useNavigate();
   const userInfo = useStore(UserInfoStore);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {

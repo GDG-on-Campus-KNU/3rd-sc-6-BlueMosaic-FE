@@ -13,7 +13,7 @@ export interface UserInfo {
 }
 
 const createUserInfoStore = (set) => ({
-  userId: -1,
+  userId: 1,
   email: '',
   password: '',
   username: '',

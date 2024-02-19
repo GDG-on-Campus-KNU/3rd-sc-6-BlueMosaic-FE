@@ -6,11 +6,10 @@ export interface FriendInfo {
   friendName: string;
   setFriendId: (friendId: FriendInfo['friendId']) => void;
   setFriendName: (friendName: FriendInfo['friendName']) => void;
-
 }
 
 const createFriendInfoStore = (set) => ({
-  friendId: -1,
+  friendId: 2,
   friendName: '',
   setFriendId: (friendId: number) => set({ friendId }),
   setFriendName: (friendName: string) => set({ friendName }),

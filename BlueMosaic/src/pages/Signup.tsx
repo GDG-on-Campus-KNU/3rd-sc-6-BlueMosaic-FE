@@ -47,7 +47,7 @@ export const Signup = () => {
   };
 
   return(
-    <WaterWave imageUrl={Signupbackground}>
+    <WaterWave imageUrl={Signupbackground} style={{ backgroundSize: 'cover' }}>
       {({ pause, play }) => (
               <Wrapper>
               <Container>

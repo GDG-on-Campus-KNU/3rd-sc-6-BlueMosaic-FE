@@ -44,8 +44,6 @@ export const Search = () => {
     }
   }
 
-
-
   return(<>
   <SearchBar>
     <SearchListTop>

@@ -2,21 +2,25 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 export interface UserInfo {
+  userId: number;
   email: string;
   password: string;
   username: string;
-  updateEmail: (email: UserInfo['email']) => void;
-  updatePassword: (password: UserInfo['password']) => void;
-  updateUsername: (username: UserInfo['username']) => void;
+  setUserId: (userId: UserInfo['userId']) => void;
+  setEmail: (email: UserInfo['email']) => void;
+  setPassword: (password: UserInfo['password']) => void;
+  setUsername: (username: UserInfo['username']) => void;
 }
 
 const createUserInfoStore = (set) => ({
+  userId: -1,
   email: '',
   password: '',
   username: '',
-  updateEmail: (email: string) => set({ email }),
-  updatePassword: (password: string) => set({ password }),
-  updateUsername: (username: string) => set({ username }),
+  setUserId: (userId: number) => set({ userId }),
+  setEmail: (email: string) => set({ email }),
+  setPassword: (password: string) => set({ password }),
+  setUsername: (username: string) => set({ username }),
 });
 
 let userInfoStoreTemp;

@@ -4,6 +4,7 @@ import SearchSVG from "../../assets/Search.svg"
 import MicSVG from "../../assets/Mic.svg"
 import CameraSVG from "../../assets/Camera.svg"
 import TimeSVG from "../../assets/Time.svg"
+import { UserApis } from '../../hooks/useUserQuery';
 
 export const Search = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -16,6 +17,7 @@ export const Search = () => {
   const handleSearchClick = () => {
     // 검색 버튼 클릭 시 검색어를 리스트에 추가하고 검색어 초기화
     setSearchList((prevList) => [...prevList, searchValue]);
+    UserApis.search(searchValue);
     setSearchValue('');
   };
 

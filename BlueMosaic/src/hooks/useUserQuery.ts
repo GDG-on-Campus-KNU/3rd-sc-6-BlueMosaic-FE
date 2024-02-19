@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { UserInfoStore } from '../stores/UserInfoStore';
 
 const data = {
-  "id": 1,
-  "nickname": "string",
+  "id": UserInfoStore.getState().userId,
+  "nickname": UserInfoStore.getState().username,
   "name": "string"
 }
 
@@ -24,6 +25,19 @@ export const UserApis = {
       }
     },
 
+  // 본인 userId 조회
+  getUserId: async () => {
+    try {
+      const res = await UserApis.instance.get(`/me`);
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      console.error('Error fetching rooms:', error);
+      return error;
+      // throw error;
+    }
+  },
+
   // 유저 정보 조회
   get: async () => {
     try {
@@ -37,9 +51,9 @@ export const UserApis = {
   },
   
   // 닉네임으로 유저 검색
-  search: async () => {
+  search: async (searchValue: string) => {
     try {
-      const res = await UserApis.instance.get(`/search/${data.nickname}`);
+      const res = await UserApis.instance.get(`/search/${searchValue}`);
       console.log(res);
       return res.data;
     } catch (error) {

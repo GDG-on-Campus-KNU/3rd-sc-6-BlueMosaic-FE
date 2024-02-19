@@ -13,7 +13,7 @@ export const Signin = () => {
   };
 
   return(
-    <WaterWave imageUrl={LoginBackround}>
+    <WaterWave imageUrl={LoginBackround} style={{ backgroundSize: 'cover' }}>
       {({ pause, play }) => (
               <Wrapper>
                 <Container>

@@ -6,7 +6,7 @@ import { Dashboard } from "../components/dashboard/dashboard"
 export const Mypage = () => {
 
   return(
-    <Wrapper backgroundImage={HomeSVG}>
+    <Wrapper backgroundImage={HomeSVG} style={{ backgroundSize: 'cover' }}>
       <Container>
         <Dashboard/>
       </Container>

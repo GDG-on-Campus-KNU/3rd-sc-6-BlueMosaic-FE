@@ -4,38 +4,17 @@ import { useQuery } from '@tanstack/react-query';
 
 export const AuthApis = {
   instance: axios.create({
-    baseURL: "http://localhost:8001/user-service/",
+    baseURL: "http://localhost:8080/",
     withCredentials: true,
   }),
 
-  checkEmailDuplicate: async (userInfo: UserInfo): Promise<boolean> => {
-    const response = await AuthApis.instance.get(`/signup/exists-email/${userInfo.email}`, {
-      email: userInfo.email,
-    });
-    return response.data.valid === true;
-  },
-
-  useCheckEmailDuplicateQuery: (userInfo: UserInfo) => {
-    const { data, isLoading, error } = useQuery<Boolean, Error>({
-      queryKey: ['checkEmailDuplicateQuery', userInfo.email],
-      queryFn: () => AuthApis.checkEmailDuplicate(userInfo),
-    });
-    return { data, isLoading, error };
-  },
-  
-  checkUsernameDuplicate: async (userInfo:UserInfo): Promise<Boolean> => {
-    const response = await AuthApis.instance.get(`/signup/exists-username/${userInfo.username}`, {
-      username: userInfo.username,
-    });
-    return response.data.valid === true;
-  },
-
-  checkUsernameDuplicateQuery: (userInfo: UserInfo) => {
-    const { data, isLoading, error } = useQuery<Boolean, Error>({
-      queryKey: ['checkUsernameDuplicateQuery', userInfo.username],
-      queryFn: () => AuthApis.checkUsernameDuplicate(userInfo),
-    });
-    return { data, isLoading, error };
+  ranking: async () => {
+    try{
+      const response = await AuthApis.instance.get('/ranking/test-making-data');
+      console.log(response);
+    } catch(err){
+     console.error(err); 
+    }
   },
 
   signup: async (userInfo:UserInfo, passwordConfirm: string, authCode: string) => {
@@ -55,33 +34,12 @@ export const AuthApis = {
     }
   },
 
-  signupQuery: (userInfo: UserInfo,passwordConfirm:string) => {
-    const { data, isLoading, error } = useQuery<Boolean, Error>({
-     queryKey: ['signupQuery', userInfo,passwordConfirm],
-      queryFn: () => AuthApis.signup(userInfo,  passwordConfirm),
-    });
-    return { data, isLoading, error };
-  },
 
-
-  signin: async (userInfo:UserInfo) => {
+  signin: async () => {
     try {
-      const response = await AuthApis.instance.post('/login', {
-        email: userInfo.email,
-        password: userInfo.password,
+      const response = await AuthApis.instance.post('/oauth2/authorization/google', {
       });
       const data = response.data;
-
-      const rawAccessToken = response.headers.get('Accesstoken');
-      const rawRefreshToken = response.headers.get('RefreshToken');
-
-      const Accesstoken = rawAccessToken ? rawAccessToken.replace(/^Bearer\s+/i, '') : null;
-      const Refreshtoken = rawRefreshToken ? rawRefreshToken.replace(/^Bearer\s+/i, '') : null;
-      
-      // console.log(`토큰 발급\n Accesstoken:${Accesstoken}\n Refreshtoken:${Refreshtoken}`)
-  
-      localStorage.setItem('Accesstoken', Accesstoken);
-      localStorage.setItem('Refreshtoken', Refreshtoken);
 
       return data;
     } catch (error) {

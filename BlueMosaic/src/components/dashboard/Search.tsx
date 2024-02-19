@@ -4,10 +4,15 @@ import SearchSVG from "../../assets/Search.svg"
 import MicSVG from "../../assets/Mic.svg"
 import CameraSVG from "../../assets/Camera.svg"
 import TimeSVG from "../../assets/Time.svg"
+import { UserApis } from '../../hooks/useUserQuery';
+import { useStore } from 'zustand';
+import { FriendInfoStore } from '../../stores/FriendStore';
+import { FriendApis } from '../../hooks/useFriendQuery';
 
 export const Search = () => {
   const [searchValue, setSearchValue] = useState('');
   const [searchList, setSearchList] = useState([]);
+  const friendInfo = useStore(FriendInfoStore);
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
@@ -16,6 +21,7 @@ export const Search = () => {
   const handleSearchClick = () => {
     // 검색 버튼 클릭 시 검색어를 리스트에 추가하고 검색어 초기화
     setSearchList((prevList) => [...prevList, searchValue]);
+    UserApis.search(searchValue);
     setSearchValue('');
   };
 
@@ -25,6 +31,18 @@ export const Search = () => {
     }
   };
 
+  const handleAddFriend = (e) => {
+    FriendApis.add();
+  }
+
+  const handleFriendList = async () => {
+    try {
+      const data = await FriendApis.find();
+      setSearchList(data);
+    } catch (error) {
+      console.error('Error fetching friend list:', error);
+    }
+  }
 
   return(<>
   <SearchBar>
@@ -57,8 +75,8 @@ export const Search = () => {
     </SearchBar>
 
       <ButtomButtons>
-        <button>Add Friend</button>
-        <button>Friend List</button>
+        <button onClick={handleAddFriend}>Add Friend</button>
+        <button onClick={handleFriendList}>Friend List</button>
       </ButtomButtons>
     </>
   )

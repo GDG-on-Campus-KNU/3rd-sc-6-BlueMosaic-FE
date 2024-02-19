@@ -1,5 +1,5 @@
 
-export const SmartphoneSVG = ({ handleClickParent }) => {
+export const SmartphoneSVG = ({ handleClickParent, imageUrl }) => {
 
   return (
 <svg width="100%"  height="100%"  viewBox="0 0 484 922" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +45,8 @@ export const SmartphoneSVG = ({ handleClickParent }) => {
 <rect x="58" y="77" width="360" height="760" fill="white"/>
 </mask>
 <g mask="url(#mask1_102_2637)">
-<rect x="58" y="154" width="360" height="480" rx="16" fill="#D9D9D9"/>
+{/* <rect x="58" y="154" width="360" height="480" rx="16" fill="#D9D9D9"/> */}
+<image x="58" y="154" width="360" height="480" rx="16" href={imageUrl} preserveAspectRatio="none" />
 <rect x="205" y="830" width="66" height="2" rx="1" fill="#FEFEFE"/>
 </g>
 <rect x="201" y="755" width="74" height="30" rx="15" fill="white"/>

@@ -5,6 +5,7 @@ import WaterWave from 'react-water-wave';
 import { CamSVG } from "../components/CamSVG";
 import { SmartphoneSVG } from "../components/SmartphoneSVG";
 import { useState } from "react"
+import imageUrl from "../assets/UploadBackground.jpg"
 
 export const Ocean = () => {
   const [showSmartphone, setShowSmartphone] = useState(false);
@@ -28,7 +29,7 @@ export const Ocean = () => {
                 { 
                   showSmartphone ? (
                     <SmartphoneWrapper>
-                      <SmartphoneSVG handleClickParent={handleClickParent} />
+                      <SmartphoneSVG handleClickParent={handleClickParent} imageUrl={imageUrl} />
                     </SmartphoneWrapper>
                   ) : (
                     <CamWrapper>

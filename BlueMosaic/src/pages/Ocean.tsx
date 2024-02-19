@@ -3,21 +3,40 @@ import { Wrapper, Container, DivCenterContainter } from "../styles/Layout"
 import UploadBackGround from "../assets/UploadBackground.jpg"
 import WaterWave from 'react-water-wave';
 import { CamSVG } from "../components/CamSVG";
+import { SmartphoneSVG } from "../components/SmartphoneSVG";
+import { useState } from "react"
 
 export const Ocean = () => {
+  const [showSmartphone, setShowSmartphone] = useState(false);
 
-  const handleClick= (event) => {
-    event.preventDefault();
+  const handleCircleClickParent = () => {
+    console.log('Circle clicked in parent!');
+    setShowSmartphone(true);
+  };
+
+  const handleClickParent = () => {
+    console.log('Circle clicked in parent!');
+    
   };
 
   return(
-    <WaterWave imageUrl={UploadBackGround} style={{ backgroundSize: 'cover' }}>
+    <WaterWave imageUrl={ UploadBackGround } style={{ backgroundSize: 'cover' }}>
       {({ pause, play }) => (
               <Wrapper>
                 <Container>
-                  <CamWrapper >
-                    <CamSVG/>
-                  </CamWrapper>
+                  
+                { 
+                  showSmartphone ? (
+                    <SmartphoneWrapper>
+                      <SmartphoneSVG handleClickParent={handleClickParent} />
+                    </SmartphoneWrapper>
+                  ) : (
+                    <CamWrapper>
+                      <CamSVG handleCircleClickParent={handleCircleClickParent}/>
+                    </CamWrapper>
+                  )
+                }
+
                 </Container>
               </Wrapper>
             )}
@@ -32,8 +51,21 @@ const CamWrapper = styled.div`
   justify-content: center;
   align-items: center; 
 
-  img {
+  SmartphoneSVG {
     width: 50%;
     height: 50%;
+  }
+`
+
+const SmartphoneWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+
+  CamSVG {
+    width: 40%;
+    height: 40%;
   }
 `

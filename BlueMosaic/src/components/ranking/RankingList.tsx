@@ -33,14 +33,29 @@ export const RankingList = () => {
 
       <RankingMine>
         <Mine>
-
+          <Profile/>
+          <div>
+            <span>이름</span>
+            <em>100P</em>
+          </div>
         </Mine>
-        <Mine>
 
-</Mine>
-<Mine>
+        <Friend>
+          <Profile/>
+          <div>
+            <span>이름</span>
+            <em>100P</em>
+          </div>
+        </Friend>
 
-</Mine>
+        <Friend>
+          <Profile/>
+          <div>
+            <span>이름</span>
+            <em>100P</em>
+          </div>
+        </Friend>
+
       </RankingMine>
 
     </RankingWrapper>
@@ -65,7 +80,7 @@ const RankingWrapper = styled.div`
     text-align: center;
     font-family: Roboto;
     font-size: 2.125rem;
-    font-weight: 500;
+    font-weight: 700;
 }` 
 
 const RankingTop = styled.div`
@@ -145,12 +160,80 @@ em{
 `;
 
 const RankingMine = styled.section`
+display: flex;
+height: 21.25rem;
+padding: 3.125rem;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 0.62775rem;
+flex-shrink: 0;
+align-self: stretch;
 
+span {
+  color: #FAFCFF;
+  font-family: Roboto;
+  font-size: 1.09863rem;
+  font-weight: 600;
+  line-height: 150%; /* 1.64794rem */
+}
+
+em {
+  color: rgba(240, 239, 239, 0.77);
+  font-family: Roboto;
+  font-size: 0.94169rem;
+  font-weight: 500;
+  line-height: 150%; /* 1.4125rem */
+  text-transform: capitalize;
+}
+`;
+
+const Profile = styled.img`
+width: 3.45275rem;
+height: 3.45275rem;
+border-radius: 3.92363rem;
+background: #D9D9D9;
 `;
 
 const Mine = styled.div`
+display: flex;
+padding: 0.9375rem 11.6875rem 0.9375rem 1.25rem;
+align-items: center;
+gap: 1rem;
+align-self: stretch;
+border-radius: 1.25563rem;
+background: var(--gradient, linear-gradient(135deg, #4285F4 0%, #B068E8 100%));
 
+div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 `;
+
+const Friend = styled.section`
+display: flex;
+padding: 0.9375rem 11.6875rem 0.9375rem 1.25rem;
+align-items: center;
+gap: 1rem;
+align-self: stretch;
+border-radius: 1.25563rem;
+background: var(--googleWhiteGray-color);
+
+div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+span{
+  color: var(--font-color);
+}
+
+em {
+  color: var(--font-color);
+}
+`
 
 const MyScore = styled.div`
   display: flex;

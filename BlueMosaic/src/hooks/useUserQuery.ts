@@ -18,9 +18,9 @@ export const UserApis = {
       try {
         console.log(data);
         const res = await UserApis.instance.put("", {
-          "id": 1,
-          "nickname": "string22",
-          "name": "string22"
+          "id": UserInfoStore.getState().userId,
+          "nickname": UserInfoStore.getState().username,
+          "name": "string"
         } );
         console.log(res);
         return res.data;

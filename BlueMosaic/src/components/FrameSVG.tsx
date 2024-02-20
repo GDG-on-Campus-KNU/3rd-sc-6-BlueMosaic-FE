@@ -12,9 +12,10 @@ export const Frame = ({ imageUrl, text="text" }) => {
 
 const FrameWrapper = styled.div`
 display: flex;
-width: 28.1875rem;
-height: 31.321rem;
+width: 45vh;
+height: 50vh;
 padding: 1.25rem 1.875rem;
+margin-bottom: 10rem;
 flex-direction: column;
 justify-content: center;
 align-items: center;

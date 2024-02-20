@@ -5,12 +5,13 @@ import WaterWave from 'react-water-wave';
 import PolaroidSVG from "../assets/Polaroid.svg"
 import { useState } from "react"
 import imageUrl from "../assets/UploadBackground.jpg"
+import { Frame } from "../components/FrameSVG";
 
 export const Trash = () => {
-  const [showSmartphone, setShowSmartphone] = useState(false);
+  const [showFrame, setShowFrame] = useState(false);
 
   const handleClick = () => {
-    setShowSmartphone(true);
+    setShowFrame(true);
   };
 
   return(
@@ -20,7 +21,8 @@ export const Trash = () => {
                 <Container>
                   
                   <PolaroidWrapper>
-                    <img src={PolaroidSVG} alt="PolaroidSVG"/>
+                    <img src={PolaroidSVG} alt="PolaroidSVG" onClick={handleClick}/>
+                    { showFrame && <Frame imageUrl={imageUrl} text="tess"/> }
                   </PolaroidWrapper>
                 </Container>
               </Wrapper>

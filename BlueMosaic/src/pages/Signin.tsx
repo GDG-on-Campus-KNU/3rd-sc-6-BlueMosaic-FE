@@ -9,7 +9,7 @@ export const Signin = () => {
 
   const handleGoogleLogin = (event) => {
     event.preventDefault();
-    window.location.href = '/oauth2/authorization/google';
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
   };
 
   return(

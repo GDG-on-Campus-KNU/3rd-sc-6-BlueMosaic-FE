@@ -30,7 +30,7 @@ function App() {
           <Route path='/rank' element={<Ranking/>}/>
           <Route path='/signin' element={<Signin/>}/>
           <Route path='/signup' element={<Signup/>}/>
-          <Route path='/oauth2/authorization/google' element={<RedirectPage/>}/>
+          <Route path='/signupRedirect' element={<RedirectPage/>}/>
 
         </Routes>
       </BrowserRouter>

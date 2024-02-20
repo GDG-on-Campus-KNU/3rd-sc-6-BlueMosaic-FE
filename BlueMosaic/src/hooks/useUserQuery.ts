@@ -14,13 +14,13 @@ export const UserApis = {
   }),
 
     // 유저 정보 수정
-    changeNickName: async () => {
+    changeNickName: async (nickname: string) => {
       try {
         console.log(data);
         const res = await UserApis.instance.put("", {
-          "id": 1,
-          "nickname": "string22",
-          "name": "string22"
+          "id": UserInfoStore.getState().userId,
+          "nickname": UserInfoStore.getState().username,
+          "name": nickname
         } );
         console.log(res);
         return res.data;

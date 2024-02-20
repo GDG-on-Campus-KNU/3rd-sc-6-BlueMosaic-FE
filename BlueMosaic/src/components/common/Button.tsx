@@ -5,12 +5,12 @@ export const Button = {
     return(<ButtonWrapper>{children}</ButtonWrapper>)
   },
 
-  setButton: ({ text, buttonType } : { text: string, buttonType: string })=> {
+  setButton: ({ text, buttonType, onClick } : { text: string, buttonType: string, onClick: () => void })=> {
     switch (buttonType) {
       case "primary":
-        return <ButtonType buttonType="primary">{text}</ButtonType>;
+        return <ButtonType buttonType="primary" onClick={onClick}>{text}</ButtonType>;
       case "secondary":
-        return <ButtonType buttonType="secondary">{text}</ButtonType>;
+        return <ButtonType buttonType="secondary" onClick={onClick}>{text}</ButtonType>;
       default:
         return null; // or handle other cases as needed
   }

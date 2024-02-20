@@ -8,9 +8,19 @@ import imageUrl from "../assets/UploadBackground.jpg"
 import { Frame } from "../components/FrameSVG";
 import { Toast } from "../components/Toast";
 import { MediaApis } from "../hooks/useMediaQuery";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export const Trash = () => {
   const [showFrame, setShowFrame] = useState(false);
+  const navigate = useNavigate();
+
+  const handleClickUpload = () => {
+    setShowFrame(false);
+  }
+
+  const handleGoto = () => {
+    navigate("/collection")
+  }
 
   const handleClick = () => {
     setShowFrame(true);
@@ -25,7 +35,7 @@ export const Trash = () => {
                   <PolaroidWrapper>
                     { showFrame ||  <img src={PolaroidSVG} alt="PolaroidSVG" onClick={handleClick}/> }
                     { showFrame && <Frame imageUrl={imageUrl} text="cod"/> }
-                    { showFrame && <Toast found={'cod'} points={"1234"}/>}
+                    { showFrame && <Toast found={'cod'} points={"1234"} handleClickUpload={handleClickUpload} handleGoto={handleGoto}/> }
                   </PolaroidWrapper>
                 </Container>
               </Wrapper>
@@ -87,8 +97,8 @@ export default FileUpload;
 
 
 const PolaroidWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;

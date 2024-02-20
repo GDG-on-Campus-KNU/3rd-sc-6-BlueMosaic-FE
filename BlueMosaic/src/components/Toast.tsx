@@ -2,7 +2,8 @@ import styled from "@emotion/styled"
 import GoogleOneSVG from "../assets/GoogleOne.svg"
 import { Button } from "./common/Button"
 
-export const Toast = ({found, points}) => {
+export const Toast = ({ found, points, handleClickUpload, handleGoto }) => {
+
   return(
     <ToastWrappaer>
       <Left>
@@ -15,8 +16,8 @@ export const Toast = ({found, points}) => {
         </MainText>
 
         <Button.Wrapper>
-          <Button.setButton text="No thanks" buttonType="secondary"/>
-          <Button.setButton text="Collection" buttonType="primary"/>
+          <Button.setButton text="Upload" buttonType="secondary" onClick={handleClickUpload}/>
+          <Button.setButton text="Collection" buttonType="primary" onClick={handleGoto}/>
         </Button.Wrapper>
       </MainContent>
 
@@ -25,6 +26,11 @@ export const Toast = ({found, points}) => {
 }
 
 const ToastWrappaer = styled.section`
+position: absolute;
+bottom: 2rem;
+right: 2rem;
+z-index: 1000;
+
 display: flex;
 width: 22.4375rem;
 align-items: center;
@@ -32,6 +38,8 @@ flex-shrink: 0;
 border-radius: 0.5rem;
 border: 1px solid #E8EAED;
 box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.20);
+
+transition: right 0.3s ease; 
 `
 const Left = styled.section`
 display: flex;

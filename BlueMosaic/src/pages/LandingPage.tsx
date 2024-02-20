@@ -20,33 +20,58 @@ const Content = ({ title, subtitle }: { title: string; subtitle: string }) => (
   </ContentWrapper>
 );
 
-export const LandingPage = () => (
-  <StyledLandingPage>
 
+export const LandingPage = () => {
+  const [clicked, setClicked] = useState(0);
+
+  const handleImageClick = () => {
+    setClicked((prevClicked) => prevClicked + 1);
+
+    // 클릭할 때마다 제목과 부제 변경
+    if (clicked === 0) {
+      setContentInfo({
+        title: "New Title 1",
+        subtitle: "New Subtitle 1",
+      });
+    } else if (clicked === 1) {
+      setContentInfo({
+        title: "New Title 2",
+        subtitle: "New Subtitle 2",
+      });
+    } else if (clicked === 2) {
+      setContentInfo({
+        title: "New Title 3",
+        subtitle: "New Subtitle 3",
+      });
+    }
+  };
+  
+  const [contentInfo, setContentInfo] = useState({
+    title: "GDSC SC3 BlueMosaic",
+    subtitle:
+      "From the small stuff to the big picture,\norganizes the work so teams know what to do.",
+  });
+
+return(  
+  <StyledLandingPage>
 <Content
-  title={<>GDSC SC3<br />BlueMosaic</>}
-  subtitle={
-    <>
-      From the small stuff to the big picture,
-      <br />
-      organizes the work so teams know what to do.
-    </>
-  }
+  title={contentInfo.title}
+  subtitle={contentInfo.subtitle}
   />
     
-    <ImageContainer zIndex={3}>
-      <img src={firstSVG} alt="first" />
-    </ImageContainer>
+    <ImageContainer zIndex={3} clicked={clicked === 3}>
+        <img src={firstSVG} alt="first" onClick={handleImageClick} />
+      </ImageContainer>
 
-    <ImageContainer zIndex={2}>
-      <img src={secondSVG} alt="second" />
-    </ImageContainer>
+      <ImageContainer zIndex={2} clicked={clicked === 2}>
+        <img src={secondSVG} alt="second" onClick={handleImageClick} />
+      </ImageContainer>
 
-    <ImageContainer zIndex={1}>
-      <img src={thirdSVG} alt="third" />
-    </ImageContainer>
-  </StyledLandingPage>
-);
+      <ImageContainer zIndex={1} clicked={clicked === 1}>
+        <img src={thirdSVG} alt="third" onClick={handleImageClick} />
+      </ImageContainer>
+  </StyledLandingPage>);
+}
 
 const StyledLandingPage = styled.div`
   display: flex;

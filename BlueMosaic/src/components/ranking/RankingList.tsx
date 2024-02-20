@@ -55,7 +55,6 @@ export const RankingList = () => {
             <em>100P</em>
           </div>
         </Friend>
-
       </RankingMine>
 
     </RankingWrapper>
@@ -234,7 +233,6 @@ em {
   color: var(--font-color);
 }
 `
-
 const MyScore = styled.div`
   display: flex;
   flex-direction: column;

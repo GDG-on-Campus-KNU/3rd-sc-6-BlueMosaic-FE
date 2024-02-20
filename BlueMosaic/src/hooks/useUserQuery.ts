@@ -16,7 +16,12 @@ export const UserApis = {
     // 유저 정보 수정
     changeNickName: async () => {
       try {
-        const res = await UserApis.instance.put("/", data );
+        console.log(data);
+        const res = await UserApis.instance.put("", {
+          "id": 1,
+          "nickname": "string22",
+          "name": "string22"
+        } );
         console.log(res);
         return res.data;
       } catch (error) {

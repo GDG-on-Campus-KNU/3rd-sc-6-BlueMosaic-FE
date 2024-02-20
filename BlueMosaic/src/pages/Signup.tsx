@@ -35,10 +35,8 @@ export const Signup = () => {
         console.error('Error fetching user data:', error);
       }
     };
-  
     fetchData(); 
-  
-  }, [userInfo]);
+  }, []);
 
   const handleGoogleLogin = (event) => {
     event.preventDefault();

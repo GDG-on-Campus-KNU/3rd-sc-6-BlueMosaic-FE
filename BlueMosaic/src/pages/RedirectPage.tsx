@@ -4,10 +4,24 @@ import { useNavigate } from "react-router-dom";
 import { useStore } from 'zustand';
 import { UserInfoStore } from '../stores/UserInfoStore';
 import { UserApis } from '../hooks/useUserQuery';
+import  axios from "axios"
 
 const RedirectPage = () => {
   const navigate = useNavigate();
   const userInfo = useStore(UserInfoStore);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/user/me');
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {

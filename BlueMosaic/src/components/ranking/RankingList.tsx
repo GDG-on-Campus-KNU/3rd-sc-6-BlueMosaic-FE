@@ -233,6 +233,7 @@ em {
   color: var(--font-color);
 }
 `
+
 const MyScore = styled.div`
   display: flex;
   flex-direction: column;

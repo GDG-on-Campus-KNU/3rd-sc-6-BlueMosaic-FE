@@ -35,7 +35,7 @@ export const Signup = () => {
 
   const handleGoogleLogin = (event) => {
     event.preventDefault();
-    UserApis.changeNickName(userInfo.username);
+    UserApis.changeNickName();
     window.location.href = '/home';
   };
 

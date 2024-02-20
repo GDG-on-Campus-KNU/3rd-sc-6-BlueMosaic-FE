@@ -44,7 +44,7 @@ box-shadow: 0px 40px 48px 0px rgba(50, 50, 71, 0.25), 0px 24px 24px 0px rgba(50,
 
 const DashboardSidebar = styled.section`
 width: 100%;
-height: 5rem;
+height: 3rem;
 flex-shrink: 0;
 
 ol {
@@ -65,8 +65,8 @@ ol {
 const DashboardContainer = styled.section`
 box-sizing: border-box;
 width: 100%;
+height: 100%;
 display: flex;
-padding: 5rem 13rem;
 flex-direction: column;
 justify-content: center;
 align-items: center;

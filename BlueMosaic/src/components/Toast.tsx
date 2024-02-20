@@ -1,5 +1,6 @@
 import styled from "@emotion/styled"
 import GoogleOneSVG from "../assets/GoogleOne.svg"
+import { Button } from "./common/Button"
 
 export const Toast = ({found, points}) => {
   return(
@@ -8,13 +9,15 @@ export const Toast = ({found, points}) => {
         <img src={GoogleOneSVG} alt="GoogleOneSVG"/>
       </Left>
       <MainContent>
-        <em>I found {found}!</em>
-        <p>My score is {points}</p>
-        
-        <ButtonWrapper>
-          <button>No thanks</button>
-          <button>Collection</button>
-        </ButtonWrapper>
+        <MainText>
+          <em>I found {found}!</em>
+          <p>My score is {points}</p>
+        </MainText>
+
+        <Button.Wrapper>
+          <Button.setButton text="No thanks" buttonType="secondary"/>
+          <Button.setButton text="Collection" buttonType="primary"/>
+        </Button.Wrapper>
       </MainContent>
 
     </ToastWrappaer>
@@ -24,32 +27,47 @@ export const Toast = ({found, points}) => {
 const ToastWrappaer = styled.section`
 display: flex;
 width: 22.4375rem;
-justify-content: center;
 align-items: center;
+flex-shrink: 0;
+border-radius: 0.5rem;
+border: 1px solid #E8EAED;
+box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.20);
 `
 const Left = styled.section`
 display: flex;
-width: 5.5625rem;
 padding: 4.3125rem 1.75rem;
 align-items: flex-start;
 gap: 0.5rem;
 flex-shrink: 0;
 border-right: 1px solid #E8EAED;
 background: var(----white-color, #FFF);
-`
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  gap: 1rem;
+img {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+}
 `
 
 const MainContent = styled.section`
   display: flex;
-  padding: 1rem;
+  width: 16.875rem;
   flex-direction: column;
-  align-items: flex-end;
+  justify-content: center;
+  align-items: center;
   gap: 2.125rem;
+  flex-shrink: 0;
   align-self: stretch;
+  background: var(----white-color, #FFF);
+  box-sizing: border-box;
+  padding: 1rem;
+`
+const MainText = styled.div`
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 0.25rem;
+align-self: stretch;
 
 em {
   color: #3C4043;
@@ -71,28 +89,5 @@ p {
   letter-spacing: 0.00438rem;
   margin: 0;
   padding: 0;
-}
-
-button: active {
-  display: flex;
-  width: 6rem;
-  height: 2.25rem;
-  padding: 0.5625rem 1.25rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: 0.25rem;
-  background: #1A73E8;
-}
-
-button {
-  display: flex;
-  width: 6rem;
-  height: 2.25rem;
-  padding: 0.5625rem 1.25rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: 0.25rem;
 }
 `

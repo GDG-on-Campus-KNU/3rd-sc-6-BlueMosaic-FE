@@ -21,11 +21,11 @@ export const Trash = () => {
       {({ pause, play }) => (
               <Wrapper>
                 <Container>
-                  <Toast found={'cod'} points={"1234"}/>
                   <FileUpload/>
                   <PolaroidWrapper>
-                    <img src={PolaroidSVG} alt="PolaroidSVG" onClick={handleClick}/>
-                    { showFrame && <Frame imageUrl={imageUrl} text="tess"/> }
+                    { showFrame ||  <img src={PolaroidSVG} alt="PolaroidSVG" onClick={handleClick}/> }
+                    { showFrame && <Frame imageUrl={imageUrl} text="cod"/> }
+                    { showFrame && <Toast found={'cod'} points={"1234"}/>}
                   </PolaroidWrapper>
                 </Container>
               </Wrapper>
@@ -90,6 +90,7 @@ const PolaroidWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center; 
 

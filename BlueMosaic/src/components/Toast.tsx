@@ -12,11 +12,11 @@ export const Toast = ({ found, points, handleClickUpload, handleGoto }) => {
       <MainContent>
         <MainText>
           <em>I found {found}!</em>
-          <p>My score is {points}</p>
+          <p>My total score is {points}</p>
         </MainText>
 
         <Button.Wrapper>
-          <Button.setButton text="Upload" buttonType="secondary" onClick={handleClickUpload}/>
+          <Button.setButton text="Reupload" buttonType="secondary" onClick={handleClickUpload}/>
           <Button.setButton text="Collection" buttonType="primary" onClick={handleGoto}/>
         </Button.Wrapper>
       </MainContent>

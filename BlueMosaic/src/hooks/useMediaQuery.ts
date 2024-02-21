@@ -24,6 +24,7 @@ export const MediaApis = {
       const res = await MediaApis.instance.put(`/${userId}`, file, {
         headers: {
           'Content-Type': 'application/json',
+          // 'Content-Type': 'multipart/form-data',
         },
       });
       console.log(res);

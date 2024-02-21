@@ -3,7 +3,7 @@ import { UserInfoStore } from '../stores/UserInfoStore';
 
 export const WasteApis = {
   instance: axios.create({
-    baseURL: 'http://localhost:8080/Wastes',
+    baseURL: 'http://localhost:8080/wastes',
     withCredentials: true,
   }),
 
@@ -21,14 +21,14 @@ export const WasteApis = {
       console.log(res);
       return res.data;
     } catch (error) {
-      console.error('Error fetching Wastes:', error);
+      console.error('Error fetching wastes:', error);
     }
   },
 
   // 획득한 점수 확인하기
   get: async () => {
     try {
-      const res = await WasteApis.instance.post('/idenify', { userId: UserInfoStore.getState().userId,
+      const res = await WasteApis.instance.post('/identify', { userId: UserInfoStore.getState().userId,
       fileid: 1 });
       console.log(res);
       return res.data;

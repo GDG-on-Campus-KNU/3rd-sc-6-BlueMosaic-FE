@@ -50,7 +50,7 @@ export const Signup = () => {
               <InputForm title="Username" type="text" placeholder="Enter your username" name="username" value={userInfo?.username} onChange={onChange} /> 
 
                 <button onClick={handleGoogleLogin}>
-                  회원가입 완료
+                  Sign Up
                 </button>
 
               </DivContainer>

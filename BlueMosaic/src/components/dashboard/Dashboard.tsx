@@ -1,6 +1,8 @@
 import styled from "@emotion/styled"
 import GoogleSVG from "../../assets/Google.svg"
 import { Search } from "./Search"
+import { Collection } from "../../pages/Collection";
+import { Achievements } from "./Achievements"
 
 interface PageItemProps {
   active?: boolean;
@@ -17,6 +19,8 @@ export const Dashboard = ({ currentPage, children }) => {
         <PageItem active={currentPage === "Collection"}>Collection</PageItem>
         <PageItem active={currentPage === "Event"}>Event</PageItem>
       </ol>
+
+      <Achievements/>
 
     </DashboardSidebar>
     <DashboardContainer>
@@ -43,6 +47,8 @@ box-shadow: 0px 40px 48px 0px rgba(50, 50, 71, 0.25), 0px 24px 24px 0px rgba(50,
 `
 
 const DashboardSidebar = styled.section`
+display: flex;
+position: relative; 
 width: 100%;
 height: 3rem;
 flex-shrink: 0;

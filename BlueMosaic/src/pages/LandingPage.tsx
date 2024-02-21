@@ -5,7 +5,7 @@ import secondSVG from "../assets/Second.svg";
 import thirdSVG from "../assets/Third.svg";
 import Play from "../assets/Play.svg"
 import React, { useState } from 'react';
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Content = ({ title, subtitle, handleClickStart, handleClickWatch }: { title: string; subtitle: string; handleClickStart: () => void; handleClickWatch: () => void; }) => (
   <ContentWrapper>

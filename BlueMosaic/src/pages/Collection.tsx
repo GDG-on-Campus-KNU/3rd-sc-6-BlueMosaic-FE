@@ -1,24 +1,42 @@
+import { useState, useEffect } from 'react';
 import { Wrapper, Container } from "../styles/Layout"
 import styled from "@emotion/styled"
 import { Dashboard } from "../components/dashboard/dashboard"
 import { MiniFrameSVG } from "../components/dashboard/MiniFrameSVG"
 import HomeSVG from "../assets/HomeSVG.svg"
-import imageUrl from "../assets/UploadBackground.jpg"
+import { MediaApis } from "../hooks/useMediaQuery"
 
 export const Collection = () => {
+  const [mediaData, setMediaData] = useState([]);
 
-  return(
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await MediaApis.get(1);
+        setMediaData(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  return (
     <Wrapper backgroundImage={HomeSVG} style={{ backgroundSize: 'cover' }}>
       <Container>
         <Dashboard currentPage="Collection">
           {/* Grid */}
           <GridContainer>
-            <MiniFrameSVG imageUrl={imageUrl} text={"cod"} date={"2024-01-01"} handleCircleClickParent={""}/>
-            <MiniFrameSVG imageUrl={imageUrl} text={"cod"} date={"2024-01-01"} handleCircleClickParent={""}/>
-            <MiniFrameSVG imageUrl={imageUrl} text={"cod"} date={"2024-01-01"} handleCircleClickParent={""}/>
-            <MiniFrameSVG imageUrl={imageUrl} text={"cod"} date={"2024-01-01"} handleCircleClickParent={""}/>
-            <MiniFrameSVG imageUrl={imageUrl} text={"cod"} date={"2024-01-01"} handleCircleClickParent={""}/>
-            <MiniFrameSVG imageUrl={imageUrl} text={"cod"} date={"2024-01-01"} handleCircleClickParent={""}/>
+            {mediaData.map((item, key) => (
+              <MiniFrameSVG
+                key={item.id}
+                imageUrl={item.url}
+                text={item.fileName}
+                date={item.fileName}
+                handleCircleClickParent={""}
+              />
+            ))}
           </GridContainer>
         </Dashboard>
       </Container>
@@ -35,6 +53,6 @@ const GridContainer = styled.div`
   padding-right: 2rem;
   grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
   gap: 16px;
-  align-items: stretch; /* 수정된 부분 */
-  align-content: flex-start; /* 수정된 부분 */
+  align-items: stretch;
+  align-content: flex-start;
 `;

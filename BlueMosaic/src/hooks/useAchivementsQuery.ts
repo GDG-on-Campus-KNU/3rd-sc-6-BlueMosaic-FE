@@ -1,10 +1,6 @@
 import axios from 'axios';
 import { UserInfoStore } from '../stores/UserInfoStore';
 
-const data = {
-  "userId": 1,
-}
-
 export const AchievementsApis = {
   instance: axios.create({
     baseURL: 'http://localhost:8080/achievements',

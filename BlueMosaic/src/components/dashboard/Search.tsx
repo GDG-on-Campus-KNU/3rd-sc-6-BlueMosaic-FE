@@ -63,7 +63,7 @@ export const Search = () => {
   const handleFriendList = async () => {
     try {
       const data = await FriendApis.find();
-      setSearchList(data.map((friend) => friend.nickname));
+      setSearchList(data.map((friend) => ({ name: friend.nickname, exists: true })));
     } catch (error) {
       console.error('Error fetching friend list:', error);
     }

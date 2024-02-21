@@ -49,7 +49,6 @@ export const Search = () => {
       friendInfo.setFriendId(data[0].id);
       friendInfo.setFriendName(data[0].nickname);
       friendInfo.setProfileImageUrl(data[0].profileImageUrl);
-      console.log(friendInfo);
     } catch (error) {
       console.error('Error fetching user information:', error);
     }
@@ -87,12 +86,16 @@ export const Search = () => {
 
         <Seperator />
 
-        { searchList.map((item, index) => (
-          <SearchList key={index} onClick={() => handleChooseFriend(item)}>
-            <img src={TimeSVG} alt="TimeSVG" />
-            <p>{item}</p>
-          </SearchList>
-        ))}
+        {searchList.map((item, index) => (
+        <SearchList
+          key={index}
+          onClick={() => handleChooseFriend(item)}
+          isSelected={chooseFriend === item}
+        >
+          <img src={TimeSVG} alt="TimeSVG" />
+          <p>{item}</p>
+        </SearchList>
+      ))}
       </SearchBar>
 
       <ButtomButtons>
@@ -173,22 +176,22 @@ button{
   background: var(----googleWhiteGray-color, #F8F9FA);
   }
 `
-const SearchList = styled.div`
-display: flex;
-width: 100%;
-height: 1.5rem;
-align-items: center;
-gap: 0.5rem;
+const SearchList = styled.div<{ isSelected: boolean }>`
+  display: flex;
+  width: 100%;
+  height: 1.5rem;
+  align-items: center;
+  gap: 0.5rem;
 
-p{
-  color: #212121;
-font-family: Roboto;
-font-size: 0.875rem;
-font-style: normal;
-font-weight: 400;
-line-height: 1.125rem; /* 128.571% */
-}
-`
+  p {
+    color: ${(props) => (props.isSelected ? '#000000' : '#212121')};
+    font-family: Roboto;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: ${(props) => (props.isSelected ? '600' : '400')};
+    line-height: 1.125rem;
+  }
+`;
 
 const Seperator = styled.div`
 width: 34.5rem;

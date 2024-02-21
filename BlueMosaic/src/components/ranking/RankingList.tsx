@@ -160,7 +160,6 @@ em{
 
 const RankingMine = styled.section`
 display: flex;
-height: 21.25rem;
 padding: 3.125rem;
 flex-direction: column;
 justify-content: center;

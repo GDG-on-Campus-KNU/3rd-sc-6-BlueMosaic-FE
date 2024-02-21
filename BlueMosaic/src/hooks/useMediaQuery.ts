@@ -24,6 +24,7 @@ export const MediaApis = {
       const res = await MediaApis.instance.put(`/${userId}`, file, {
         headers: {
           'Content-Type': 'application/json',
+          // 'Content-Type': 'multipart/form-data',
         },
       });
       console.log(res);
@@ -54,9 +55,10 @@ export const MediaApis = {
   upload: async (formData: FormData) => {
     console.log(formData);
     try {
-      const res = await MediaApis.instance.post(`/upload`, { file: formData }, {
+      const res = await MediaApis.instance.post(`/upload`,formData, {
         headers: {
-          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/json',
+          // 'Content-Type': 'multipart/form-data',
         },
       });
       console.log(res);

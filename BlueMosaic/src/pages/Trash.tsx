@@ -69,8 +69,13 @@ function FileUpload() {
     console.log("File Size:", selectedFile.size);
     console.log("File Name:", selectedFile.name);
 
-    console.log("formData:", formData);
+    console.log("formData:", formData); // 볼 수 없음
 
+    // 폼 객체 key 값을 순회.
+    const values = formData.values();
+    for (const pair of values) {
+        console.log(pair); 
+    }
 
     try {
       const response = await MediaApis.upload(formData);

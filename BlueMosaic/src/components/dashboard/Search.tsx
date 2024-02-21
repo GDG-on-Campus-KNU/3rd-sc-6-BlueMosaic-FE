@@ -36,7 +36,7 @@ export const Search = () => {
 
   const handleAddFriend = async () => {
     try {
-      await FriendApis.add(chooseFriend);
+      await FriendApis.add();
     } catch (error) {
       console.error('Error adding friend:', error);
     }
@@ -46,9 +46,10 @@ export const Search = () => {
     setChooseFriend(item);
     try {
       const data = await UserApis.search(item);
-      friendInfo.setFriendId(data.id);
-      friendInfo.setFriendName(data.nickname);
-      friendInfo.setProfileImageUrl(data.profileImageUrl);
+      friendInfo.setFriendId(data[0].id);
+      friendInfo.setFriendName(data[0].nickname);
+      friendInfo.setProfileImageUrl(data[0].profileImageUrl);
+      console.log(friendInfo);
     } catch (error) {
       console.error('Error fetching user information:', error);
     }

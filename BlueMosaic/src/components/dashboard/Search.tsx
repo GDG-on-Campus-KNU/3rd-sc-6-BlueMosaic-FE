@@ -21,7 +21,12 @@ export const Search = () => {
 
   const handleSearchClick = async () => {
     try {
-      setSearchList((prevList) => [searchValue, ...prevList]);
+      const data = await UserApis.search(searchValue);
+      if ( data === false ) {
+        setSearchList((prevList) => [{ name: searchValue, exists: false }, ...prevList]);
+      } else {
+        setSearchList((prevList) => [{ name: searchValue, exists: true }, ...prevList]);
+      }
     } catch (error) {
       console.error('Error searching for user:', error);
     }
@@ -44,6 +49,7 @@ export const Search = () => {
 
   const handleChooseFriend = async (item: string) => {
     setChooseFriend(item);
+    console.log(friendInfo);
     try {
       const data = await UserApis.search(item);
       friendInfo.setFriendId(data[0].id);
@@ -89,11 +95,12 @@ export const Search = () => {
         {searchList.map((item, index) => (
         <SearchList
           key={index}
-          onClick={() => handleChooseFriend(item)}
-          isSelected={chooseFriend === item}
+          onClick={() => handleChooseFriend(item.name)}
+          isSelected={chooseFriend === item.name}
+          userExists={item.exists}
         >
           <img src={TimeSVG} alt="TimeSVG" />
-          <p>{item}</p>
+          <p>{item.name}</p>
         </SearchList>
       ))}
       </SearchBar>
@@ -176,7 +183,7 @@ button{
   background: var(----googleWhiteGray-color, #F8F9FA);
   }
 `
-const SearchList = styled.div<{ isSelected: boolean }>`
+const SearchList = styled.div<{ isSelected: boolean; userExists: boolean }>`
   display: flex;
   width: 100%;
   height: 1.5rem;
@@ -184,7 +191,7 @@ const SearchList = styled.div<{ isSelected: boolean }>`
   gap: 0.5rem;
 
   p {
-    color: ${(props) => (props.isSelected ? '#000000' : '#212121')};
+    color: ${(props) => (props.isSelected ? '#000000' : props.userExists ? '#212121' : 'var(--googleGray-color)')};
     font-family: Roboto;
     font-size: 0.875rem;
     font-style: normal;
@@ -192,6 +199,7 @@ const SearchList = styled.div<{ isSelected: boolean }>`
     line-height: 1.125rem;
   }
 `;
+
 
 const Seperator = styled.div`
 width: 34.5rem;

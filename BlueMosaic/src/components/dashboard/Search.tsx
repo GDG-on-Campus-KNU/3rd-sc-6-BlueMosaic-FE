@@ -13,6 +13,7 @@ export const Search = () => {
   const [searchValue, setSearchValue] = useState('');
   const [searchList, setSearchList] = useState<string[]>([]);
   const [chooseFriend, setChooseFriend] = useState<string | null>(null);
+  const [isExchangeMode, setExchangeMode] = useState(false);
   const friendInfo = useStore(FriendInfoStore);
 
   const handleInputChange = (e) => {
@@ -61,9 +62,15 @@ export const Search = () => {
   };
 
   const handleFriendList = async () => {
+    if ( isExchangeMode === true){
+      setExchangeMode(false); 
+      setSearchList([]);
+      return;
+    }
     try {
       const data = await FriendApis.find();
       setSearchList(data.map((friend) => ({ name: friend.nickname, exists: true })));
+      setExchangeMode(true); 
     } catch (error) {
       console.error('Error fetching friend list:', error);
     }
@@ -107,7 +114,7 @@ export const Search = () => {
 
       <ButtomButtons>
         <button onClick={handleAddFriend}>Add Friend</button>
-        <button onClick={handleFriendList}>Friend List</button>
+        <button onClick={handleFriendList}>{isExchangeMode ? 'Back to Friend List' : 'Friend List'}</button>
       </ButtomButtons>
     </>
   );

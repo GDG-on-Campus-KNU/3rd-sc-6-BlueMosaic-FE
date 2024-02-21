@@ -97,17 +97,26 @@ export const DivContainer = styled.section`
   gap: 2rem;
   flex-shrink: 0;
   border-radius: 3.125rem 0rem 0rem 3.125rem;
-  background: var(----white-color, #FFF);
+  background: var(--white-color);
 
   button {
     border: none;
-    background: none;
-    padding: 0;
+    background: #fff;
+    padding: 10px 20px;
     cursor: pointer;
     transition: filter 0.3s ease;
-  }
+    border-radius: 20px; 
+    border: 2px solid var(--googleblue-color);
   
-  button:hover {
-    filter: brightness(70%);
+    &:hover {
+      filter: brightness(70%);
+    }
   }
+`
+
+export const Center = `
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
 `

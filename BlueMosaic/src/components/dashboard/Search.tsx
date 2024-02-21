@@ -11,17 +11,20 @@ import { FriendApis } from '../../hooks/useFriendQuery';
 
 export const Search = () => {
   const [searchValue, setSearchValue] = useState('');
-  const [searchList, setSearchList] = useState([]);
+  const [searchList, setSearchList] = useState<string[]>([]);
+  const [chooseFriend, setChooseFriend] = useState<string | null>(null);
   const friendInfo = useStore(FriendInfoStore);
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
   };
 
-  const handleSearchClick = () => {
-    // 검색 버튼 클릭 시 검색어를 리스트에 추가하고 검색어 초기화
-    setSearchList((prevList) => [...prevList, searchValue]);
-    UserApis.search(searchValue);
+  const handleSearchClick = async () => {
+    try {
+      setSearchList((prevList) => [searchValue, ...prevList]);
+    } catch (error) {
+      console.error('Error searching for user:', error);
+    }
     setSearchValue('');
   };
 
@@ -31,56 +34,73 @@ export const Search = () => {
     }
   };
 
-  const handleAddFriend = (e) => {
-    FriendApis.add();
-  }
+  const handleAddFriend = async () => {
+    try {
+      await FriendApis.add(chooseFriend);
+    } catch (error) {
+      console.error('Error adding friend:', error);
+    }
+  };
+
+  const handleChooseFriend = async (item: string) => {
+    setChooseFriend(item);
+    try {
+      const data = await UserApis.search(item);
+      friendInfo.setFriendId(data.id);
+      friendInfo.setFriendName(data.nickname);
+      friendInfo.setProfileImageUrl(data.profileImageUrl);
+    } catch (error) {
+      console.error('Error fetching user information:', error);
+    }
+  };
 
   const handleFriendList = async () => {
     try {
       const data = await FriendApis.find();
-      setSearchList(data);
+      setSearchList(data.map((friend) => friend.nickname));
     } catch (error) {
       console.error('Error fetching friend list:', error);
     }
-  }
+  };
 
-  return(<>
-  <SearchBar>
-    <SearchListTop>
-      <SearchIcons>
-      <button onClick={handleSearchClick}>
-        <img src={SearchSVG} alt="SearchSVG"/>
-      </button>
-        <input
+  return (
+    <>
+      <SearchBar>
+        <SearchListTop>
+          <SearchIcons>
+            <button onClick={handleSearchClick}>
+              <img src={SearchSVG} alt="SearchSVG" />
+            </button>
+            <input
               placeholder="Search..."
               value={searchValue}
               onChange={handleInputChange}
               onKeyDown={handleEnterKey}
             />
-        <ColorIcons>
-        <img src={MicSVG} alt="MicSVG"/>
-        <img src={CameraSVG} alt="CameraSVG"/>
-        </ColorIcons>
-      </SearchIcons>
-    </SearchListTop>
+            <ColorIcons>
+              <img src={MicSVG} alt="MicSVG" />
+              <img src={CameraSVG} alt="CameraSVG" />
+            </ColorIcons>
+          </SearchIcons>
+        </SearchListTop>
 
-    <Seperator/>
+        <Seperator />
 
-    {searchList.map((item, index) => (
-          <SearchList key={index}>
+        { searchList.map((item, index) => (
+          <SearchList key={index} onClick={() => handleChooseFriend(item)}>
             <img src={TimeSVG} alt="TimeSVG" />
             <p>{item}</p>
           </SearchList>
         ))}
-    </SearchBar>
+      </SearchBar>
 
       <ButtomButtons>
         <button onClick={handleAddFriend}>Add Friend</button>
         <button onClick={handleFriendList}>Friend List</button>
       </ButtomButtons>
     </>
-  )
-}
+  );
+};
 
 const SearchBar = styled.div`
 display: flex;

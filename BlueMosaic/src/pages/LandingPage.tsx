@@ -1,58 +1,122 @@
 import styled from "@emotion/styled";
+import { keyframes } from "@emotion/react";
 import firstSVG from "../assets/First.svg";
 import secondSVG from "../assets/Second.svg";
 import thirdSVG from "../assets/Third.svg";
 import Play from "../assets/Play.svg"
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
-const Content = ({ title, subtitle }: { title: string; subtitle: string }) => (
+const Content = ({ title, subtitle, handleClickStart, handleClickWatch }: { title: string; subtitle: string; handleClickStart: () => void; handleClickWatch: () => void; }) => (
   <ContentWrapper>
     <h1>{title}</h1>
     <p>{subtitle}</p>
     <ButtonWrapper>
-  <Button>
-    Get Started
-  </Button>
-    <Button>
-    Watch Video
-  </Button>
-  </ButtonWrapper>
+      <Button onClick={handleClickStart}>
+        Get Started
+      </Button>
+      <Button onClick={handleClickWatch}>
+        Watch Video
+      </Button>
+    </ButtonWrapper>
   </ContentWrapper>
 );
 
-export const LandingPage = () => (
-  <StyledLandingPage>
 
-<Content
-  title={<>GDSC SC3<br />BlueMosaic</>}
-  subtitle={
-    <>
-      From the small stuff to the big picture,
-      <br />
-      organizes the work so teams know what to do.
-    </>
+export const LandingPage = () => {
+  const [clicked, setClicked] = useState(0);
+  const navigate = useNavigate();
+
+  const handleImageClick = () => {
+    setClicked((prevClicked) => (prevClicked < 3 ? prevClicked + 1 : 0));
+
+    // 클릭할 때마다 제목과 부제 변경
+    if (clicked === 0) {
+      setContentInfo({
+        title: "New Title 1",
+        subtitle: "New Subtitle 1",
+      });
+    } else if (clicked === 1) {
+      setContentInfo({
+        title: "New Title 2",
+        subtitle: "New Subtitle 2",
+      });
+    } else if (clicked === 2) {
+      setContentInfo({
+        title: "New Title 3",
+        subtitle: "New Subtitle 3",
+      });
+    }
+  };
+
+  const handleClickWatch = () => {
+    const youtubeLink = "https://www.youtube.com/your_video_link_here";
+    window.open(youtubeLink, "_blank");
   }
+
+  const handleClickStart = () => {
+    navigate("/home");
+  }
+  
+  const [contentInfo, setContentInfo] = useState({
+    title: "GDSC SC3 BlueMosaic",
+    subtitle:
+      "From the small stuff to the big picture,\norganizes the work so teams know what to do.",
+  });
+
+return(  
+  <StyledLandingPage>
+<Content
+  title={contentInfo.title}
+  subtitle={contentInfo.subtitle}
+  handleClickStart={handleClickStart}
+  handleClickWatch={handleClickWatch}
   />
     
-    <ImageContainer zIndex={3}>
-      <img src={firstSVG} alt="first" />
-    </ImageContainer>
+    <ImageContainer zIndex={3} clicked={clicked === 3}>
+      <img
+        src={firstSVG}
+        alt="first"
+        onClick={handleImageClick}
+        style={{
+          left: "5rem",
+          display: "flex",
+          position: "fixed",
+          top: 0,
+        }}
+      />
+      </ImageContainer>
 
-    <ImageContainer zIndex={2}>
-      <img src={secondSVG} alt="second" />
-    </ImageContainer>
+      <ImageContainer zIndex={2} clicked={clicked === 2}>
+        <img src={secondSVG} alt="second" onClick={handleImageClick} />
+      </ImageContainer>
 
-    <ImageContainer zIndex={1}>
-      <img src={thirdSVG} alt="third" />
-    </ImageContainer>
-  </StyledLandingPage>
-);
+      <ImageContainer zIndex={1} clicked={clicked === 1}>
+        <img src={thirdSVG} alt="third" onClick={handleImageClick}         style={{
+          left: "-5rem",
+          display: "flex",
+          position: "fixed",
+          top: 0,
+        }} />
+      </ImageContainer>
+  </StyledLandingPage>);
+}
+
+const moveLeft = keyframes`
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+`;
 
 const StyledLandingPage = styled.div`
   display: flex;
   background: #165ED6;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
+  overflow: hidden;
 `;
 
 const ContentWrapper = styled.div`
@@ -61,6 +125,7 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 0 5.75rem;
+  z-index: 1000;
 
   h1 {
     font-size: 3.75rem;
@@ -79,17 +144,18 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const ImageContainer = styled.div<{ zIndex: number }>`
+const ImageContainer = styled.div<{ zIndex: number; clicked: boolean }>`
   width: 100%;
   display: flex;
-  position: absolute;
+  position: fixed; 
+  top: 0; 
 
   img {
-    position: absolute;
-    height: 100%;
     height: 100vh;
     width: auto;
-    right : 0px;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+    transform: translateX(${(props) => (props.clicked ? "-10%" : "30%")});
   }
 
   z-index: ${(props) => props.zIndex};
@@ -109,6 +175,6 @@ const Button = styled.button`
 `
 
 const ButtonWrapper = styled.div`
- display: flex;
- gap: 1rem;
+  display: flex;
+  gap: 1rem;
 `

@@ -11,17 +11,26 @@ import { FriendApis } from '../../hooks/useFriendQuery';
 
 export const Search = () => {
   const [searchValue, setSearchValue] = useState('');
-  const [searchList, setSearchList] = useState([]);
+  const [searchList, setSearchList] = useState<string[]>([]);
+  const [chooseFriend, setChooseFriend] = useState<string | null>(null);
+  const [isExchangeMode, setExchangeMode] = useState(false);
   const friendInfo = useStore(FriendInfoStore);
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
   };
 
-  const handleSearchClick = () => {
-    // 검색 버튼 클릭 시 검색어를 리스트에 추가하고 검색어 초기화
-    setSearchList((prevList) => [...prevList, searchValue]);
-    UserApis.search(searchValue);
+  const handleSearchClick = async () => {
+    try {
+      const data = await UserApis.search(searchValue);
+      if ( data === false ) {
+        setSearchList((prevList) => [{ name: searchValue, exists: false }, ...prevList]);
+      } else {
+        setSearchList((prevList) => [{ name: searchValue, exists: true }, ...prevList]);
+      }
+    } catch (error) {
+      console.error('Error searching for user:', error);
+    }
     setSearchValue('');
   };
 
@@ -31,56 +40,92 @@ export const Search = () => {
     }
   };
 
-  const handleAddFriend = (e) => {
-    FriendApis.add();
-  }
+  const handleAddFriend = async () => {
+    try {
+      await FriendApis.add();
+    } catch (error) {
+      console.error('Error adding friend:', error);
+    }
+  };
+
+  const handleChooseFriend = async (item: string) => {
+    setChooseFriend(item);
+    console.log(friendInfo);
+    try {
+      const data = await UserApis.search(item);
+      friendInfo.setFriendId(data[0].id);
+      friendInfo.setFriendName(data[0].nickname);
+      friendInfo.setProfileImageUrl(data[0].profileImageUrl);
+    } catch (error) {
+      console.error('Error fetching user information:', error);
+    }
+  };
 
   const handleFriendList = async () => {
+    if ( isExchangeMode === true){
+      setExchangeMode(false); 
+      setSearchList([]);
+      return;
+    }
     try {
       const data = await FriendApis.find();
-      setSearchList(data);
+      setSearchList(data.map((friend) => ({ name: friend.nickname, exists: true })));
+      setExchangeMode(true); 
     } catch (error) {
       console.error('Error fetching friend list:', error);
     }
-  }
+  };
 
-  return(<>
-  <SearchBar>
-    <SearchListTop>
-      <SearchIcons>
-      <button onClick={handleSearchClick}>
-        <img src={SearchSVG} alt="SearchSVG"/>
-      </button>
-        <input
+  const handleExchangeCollection = async () => {
+    // Implement logic for exchanging collection
+  };
+  
+
+  return (
+    <>
+      <SearchBar>
+        <SearchListTop>
+          <SearchIcons>
+            <button onClick={handleSearchClick}>
+              <img src={SearchSVG} alt="SearchSVG" />
+            </button>
+            <input
               placeholder="Search..."
               value={searchValue}
               onChange={handleInputChange}
               onKeyDown={handleEnterKey}
             />
-        <ColorIcons>
-        <img src={MicSVG} alt="MicSVG"/>
-        <img src={CameraSVG} alt="CameraSVG"/>
-        </ColorIcons>
-      </SearchIcons>
-    </SearchListTop>
+            <ColorIcons>
+              <img src={MicSVG} alt="MicSVG" />
+              <img src={CameraSVG} alt="CameraSVG" />
+            </ColorIcons>
+          </SearchIcons>
+        </SearchListTop>
 
-    <Seperator/>
+        <Seperator />
 
-    {searchList.map((item, index) => (
-          <SearchList key={index}>
-            <img src={TimeSVG} alt="TimeSVG" />
-            <p>{item}</p>
-          </SearchList>
-        ))}
-    </SearchBar>
+        {searchList.map((item, index) => (
+        <SearchList
+          key={index}
+          onClick={() => handleChooseFriend(item.name)}
+          isSelected={chooseFriend === item.name}
+          userExists={item.exists}
+        >
+          <img src={TimeSVG} alt="TimeSVG" />
+          <p>{item.name}</p>
+        </SearchList>
+      ))}
+      </SearchBar>
 
       <ButtomButtons>
-        <button onClick={handleAddFriend}>Add Friend</button>
-        <button onClick={handleFriendList}>Friend List</button>
+        <button onClick={isExchangeMode ? handleExchangeCollection : handleAddFriend}>
+          {isExchangeMode ? 'Exchange Collection' : 'Add Friend'}
+        </button>
+        <button onClick={handleFriendList}>{isExchangeMode ? 'Back to Friend List' : 'Friend List'}</button>
       </ButtomButtons>
     </>
-  )
-}
+  );
+};
 
 const SearchBar = styled.div`
 display: flex;
@@ -152,22 +197,23 @@ button{
   background: var(----googleWhiteGray-color, #F8F9FA);
   }
 `
-const SearchList = styled.div`
-display: flex;
-width: 100%;
-height: 1.5rem;
-align-items: center;
-gap: 0.5rem;
+const SearchList = styled.div<{ isSelected: boolean; userExists: boolean }>`
+  display: flex;
+  width: 100%;
+  height: 1.5rem;
+  align-items: center;
+  gap: 0.5rem;
 
-p{
-  color: #212121;
-font-family: Roboto;
-font-size: 0.875rem;
-font-style: normal;
-font-weight: 400;
-line-height: 1.125rem; /* 128.571% */
-}
-`
+  p {
+    color: ${(props) => (props.isSelected ? '#000000' : props.userExists ? '#212121' : 'var(--googleGray-color)')};
+    font-family: Roboto;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: ${(props) => (props.isSelected ? '600' : '400')};
+    line-height: 1.125rem;
+  }
+`;
+
 
 const Seperator = styled.div`
 width: 34.5rem;

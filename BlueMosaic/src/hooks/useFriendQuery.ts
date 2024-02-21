@@ -1,12 +1,6 @@
 import axios from 'axios';
-import { useStore } from 'zustand';
 import { FriendInfoStore } from '../stores/FriendStore';
 import { UserInfoStore } from '../stores/UserInfoStore';
-
-const data = {
-  "userId": UserInfoStore.getState().userId,
-  "friendUserId": FriendInfoStore.getState().friendId
-}
 
 export const FriendApis = {
   instance: axios.create({
@@ -17,9 +11,9 @@ export const FriendApis = {
   // 친구추가 userId - friendUserId
   add: async () => {
     try {
-      console.log("sending", data);
+      console.log("sending");
       const res = await FriendApis.instance.post(
-        '/friends', data );
+        '/friends',  { userId: UserInfoStore.getState().userId, friendUserId: FriendInfoStore.getState().friendId } );
       console.log(res);
       return res.data;
     } catch (error) {
@@ -32,7 +26,7 @@ export const FriendApis = {
   find: async () => {
     try {
       const res = await FriendApis.instance.get(
-        `/friends/${data.userId}`);
+        `/friends/${UserInfoStore.getState().userId}`);
       console.log(res);
       return res.data;
     } catch (error) {
@@ -45,7 +39,7 @@ export const FriendApis = {
   delete: async () => {
     try {
       const res = await FriendApis.instance.delete(
-        `/friends/${data.friendUserId}`);
+        `/friends/${FriendInfoStore.getState().friendId}`);
       console.log(res);
       return res.data;
     } catch (error) {

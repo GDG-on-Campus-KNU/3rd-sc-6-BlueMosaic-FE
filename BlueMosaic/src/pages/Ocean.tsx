@@ -140,8 +140,8 @@ const SmartphoneWrapper = styled.div`
 `
 
 const StyledButton = styled.button`
-  background-color: var(--googleblue-color); 
-  color: var(--white-color); 
+  background-color: var(--white-color); 
+  color: var(--googleblue-color); 
   padding: 10px 15px;
   border: none; 
   border-radius: 4px; 

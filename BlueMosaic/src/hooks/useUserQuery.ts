@@ -59,11 +59,10 @@ export const UserApis = {
   search: async (searchValue: string) => {
     try {
       const res = await UserApis.instance.get(`/search/${searchValue}`);
-      console.log(res);
       return res.data;
     } catch (error) {
       console.error('Error fetching rooms:', error);
-      throw error;
+      return false;
     }
   },
 };

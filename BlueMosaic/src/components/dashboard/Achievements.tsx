@@ -13,12 +13,14 @@ export const Achievements = () => {
     const fetchData = async () => {
       try {
         const data = await AchievementsApis.get();
-        console.log(data);
+        console.log("data", data);
 
         // 가장 높은 등급이 0번째 오도록, 넣는다. 따라서 앞에다가 계속 넣어야한다.
-        // "sproutCleaner": true, [2번째]
-        // "experiencedCleaner": true, [1]번째
-        // "skilledCleaner": true, [0]번째
+        // 자료는 다음과 같다 0은 파싱을 위한 기준
+        // 11, 12, 13 1이라는 카테고리의 1번째, 2번째, 3번째
+        // "sproutCleaner013": true, [2번째]
+        // "experiencedCleaner012": true, [1]번째
+        // "skilledCleaner011": true, [0]번째
 
         //Cleaner
         AchievementInfo.setCleaner([]);

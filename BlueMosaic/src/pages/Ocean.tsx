@@ -1,24 +1,79 @@
 import styled from "@emotion/styled"
-import { Wrapper, Container, DivCenterContainter } from "../styles/Layout"
+import { Wrapper, Container } from "../styles/Layout"
 import UploadBackGround from "../assets/UploadBackground.jpg"
 import WaterWave from 'react-water-wave';
 import { CamSVG } from "../components/CamSVG";
 import { SmartphoneSVG } from "../components/SmartphoneSVG";
-import { useState } from "react"
+import { useState, ChangeEvent, FormEvent, useRef } from "react"
+import { useNavigate } from "react-router-dom";
+import { Toast } from "../components/Toast";
+import { MediaApis } from "../hooks/useMediaQuery";
 import imageUrl from "../assets/UploadBackground.jpg"
 
 export const Ocean = () => {
   const [showSmartphone, setShowSmartphone] = useState(false);
+  const [showToast, setShowToast] = useState(true);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
 
-  const handleCircleClickParent = () => {
-    console.log('Circle clicked in parent!');
+  // 파일 선택 핸들러
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      setSelectedFile(file);
+
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImageUrl(imageUrl);
+    }
+  };
+
+  // 파일 업로드 핸들러
+  const handleUpload = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!selectedFile) {
+      alert('파일을 선택해주세요.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    // 폼 객체 key 값을 순회.
+    const values = formData.values();
+    for (const pair of values) {
+      console.log(pair);
+    }
+
+    try {
+      const response = await MediaApis.upload(formData);
+      console.log("Upload Response:", response);
+      setShowSmartphone(true);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
+
+  const handleClickToast = () => {
+    setShowToast(false);
+  };
+
+  const handleClickUpload = () => {
     setShowSmartphone(true);
   };
 
-  const handleClickParent = () => {
-    console.log('Circle clicked in parent!');
-    
+  const handleClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); 
+    }
   };
+
+  const handleGoto = () => {
+    navigate("/collection");
+  };
+
+
 
   return(
     <WaterWave imageUrl={ UploadBackGround } style={{ backgroundSize: 'cover' }}>
@@ -29,15 +84,27 @@ export const Ocean = () => {
                 { 
                   showSmartphone ? (
                     <SmartphoneWrapper>
-                      <SmartphoneSVG handleClickParent={handleClickParent} imageUrl={imageUrl} />
+                      <SmartphoneSVG handleClickParent="" imageUrl={imageUrl} />
+                      { showSmartphone && <Toast found={`I found ${"cod"}`} points={`My total  score is ${100}`} handleClickUpload={handleClickUpload} handleGoto={handleGoto} button1={"Reupload"} button2={"Collection"} />}
                     </SmartphoneWrapper>
                   ) : (
                     <CamWrapper>
-                      <CamSVG handleCircleClickParent={handleCircleClickParent}/>
+                      <CamSVG handleCircleClickParent={handleClick}/>
+                      { showToast && <Toast found={'Information'} points={"Click the red button to upload the video and collect your drawings"} button1={"No thanks"} button2={"got it"} handleClickUpload={handleClickToast} handleGoto={handleClickToast}/> }
+                      <form onSubmit={handleUpload}>
+                        <input
+                          id='image'
+                          type='file'
+                          multiple
+                          onChange={handleFileChange}
+                          style={{ display: 'none' }}
+                          ref={fileInputRef}
+                        />
+                        <StyledButton type='submit'>submit</StyledButton>
+                      </form>
                     </CamWrapper>
                   )
                 }
-
                 </Container>
               </Wrapper>
             )}
@@ -49,6 +116,7 @@ const CamWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center; 
 
@@ -68,5 +136,18 @@ const SmartphoneWrapper = styled.div`
   CamSVG {
     width: 40%;
     height: 40%;
+  }
+`
+
+const StyledButton = styled.button`
+  background-color: var(--googleblue-color); 
+  color: var(--white-color); 
+  padding: 10px 15px;
+  border: none; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  
+  &:hover {
+    filter: brightness(70%);
   }
 `

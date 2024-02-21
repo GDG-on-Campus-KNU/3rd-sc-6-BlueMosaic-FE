@@ -5,7 +5,7 @@ export const Button = {
     return(<ButtonWrapper>{children}</ButtonWrapper>)
   },
 
-  setButton: ({ text, buttonType, onClick } : { text: string, buttonType: string, onClick: () => void })=> {
+  SetButton: ({ text, buttonType, onClick } : { text: string, buttonType: string, onClick: () => void })=> {
     switch (buttonType) {
       case "primary":
         return <ButtonType buttonType="primary" onClick={onClick}>{text}</ButtonType>;
@@ -34,15 +34,12 @@ const ButtonType = styled.button<{ buttonType: string }>`
   align-items: center;
   gap: 0.5rem;
   border-radius: 0.25rem;
-  border: 1px solid var(----googleblue-color, #4285F4);
+  border: 1px solid var(--googleblue-color, #4285F4);
 
-  /* Use conditional styling based on the type prop */
   background-color: ${(props) => (props.buttonType === 'primary' ? '#1A73E8' : '#ffffff')};
   color: ${(props) => (props.buttonType === 'primary' ? '#ffffff' : '#5F6368')};
 
   font-family: Roboto;
   font-size: 0.875rem;
-  font-style: normal;
   font-weight: 500;
-  line-height: normal;
 `;

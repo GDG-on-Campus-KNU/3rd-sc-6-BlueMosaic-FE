@@ -2,30 +2,30 @@ import styled from "@emotion/styled"
 import GoogleOneSVG from "../assets/GoogleOne.svg"
 import { Button } from "./common/Button"
 
-export const Toast = ({ found, points, handleClickUpload, handleGoto }) => {
+export const Toast = ({ found, points, button1, button2, handleClickUpload, handleGoto }) => {
 
   return(
-    <ToastWrappaer>
+    <ToastWrapper>
       <Left>
         <img src={GoogleOneSVG} alt="GoogleOneSVG"/>
       </Left>
       <MainContent>
         <MainText>
-          <em>I found {found}!</em>
-          <p>My total score is {points}</p>
+          <em>{found}</em>
+          <p>{points}</p>
         </MainText>
 
         <Button.Wrapper>
-          <Button.setButton text="Reupload" buttonType="secondary" onClick={handleClickUpload}/>
-          <Button.setButton text="Collection" buttonType="primary" onClick={handleGoto}/>
+          <Button.SetButton text={button1} buttonType="secondary" onClick={handleClickUpload}/>
+          <Button.SetButton text={button2} buttonType="primary" onClick={handleGoto}/>
         </Button.Wrapper>
       </MainContent>
 
-    </ToastWrappaer>
+    </ToastWrapper>
   )
 }
 
-const ToastWrappaer = styled.section`
+const ToastWrapper = styled.section`
 position: absolute;
 bottom: 2rem;
 right: 2rem;
@@ -76,25 +76,22 @@ flex-direction: column;
 align-items: flex-start;
 gap: 0.25rem;
 align-self: stretch;
+font-family: Roboto;
+font-size: 0.875rem;
+letter-spacing: 0.00438rem;
 
 em {
   color: #3C4043;
-  font-family: Roboto;
-  font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.6875rem; /* 192.857% */
-  letter-spacing: 0.00438rem;
   margin: 0;
   padding: 0;
 }
 
 p {
   color: #5F6368;
-  font-family: Roboto;
-  font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.1875rem; /* 135.714% */
-  letter-spacing: 0.00438rem;
   margin: 0;
   padding: 0;
 }

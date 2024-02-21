@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const Trash = () => {
   const [showFrame, setShowFrame] = useState(false);
+  const [showToast, setShowToast] = useState(true);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null); // Ref for the file input
@@ -58,14 +59,18 @@ export const Trash = () => {
     setShowFrame(false);
   };
 
-  const handleGoto = () => {
-    navigate("/collection");
+  const handleClickToast = () => {
+    setShowToast(false);
   };
 
   const handleClick = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click(); // Simulate file input click
+      fileInputRef.current.click(); 
     }
+  };
+
+  const handleGoto = () => {
+    navigate("/collection");
   };
 
   return (
@@ -75,7 +80,7 @@ export const Trash = () => {
           <Container>
             <PolaroidWrapper>
               {showFrame || <img src={PolaroidSVG} alt="PolaroidSVG" onClick={handleClick} />}
-              {showFrame && <Frame imageUrl={selectedImageUrl || ''} text="get score : 100" />}
+              {showFrame && <Frame imageUrl={selectedImageUrl || ''} text="plastic bag" point='100'/>}
               <form onSubmit={handleUpload}>
                 <input
                   id='image'
@@ -85,9 +90,11 @@ export const Trash = () => {
                   style={{ display: 'none' }}
                   ref={fileInputRef}
                 />
-                <button type='submit'>submit</button>
+                <StyledButton type='submit'>submit</StyledButton>
               </form>
-              {showFrame && <Toast found={'plastic bag'} points={"100"} handleClickUpload={handleClickUpload} handleGoto={handleGoto} />}
+              { showToast && !showFrame && <Toast found={'Information'} points={"Click the red button to upload the picture and get score points"} button1={"No thanks"} button2={"got it"} handleClickUpload={handleClickToast} handleGoto={handleClickToast}/> }
+
+              { showFrame && <Toast found={`I found ${"plastic bag"}`} points={`My total  score is ${100}`} handleClickUpload={handleClickUpload} handleGoto={handleGoto} button1={"Reupload"} button2={"Collection"} />}
             </PolaroidWrapper>
           </Container>
         </Wrapper>
@@ -108,17 +115,17 @@ const PolaroidWrapper = styled.div`
     width: 70%;
     height: 70%;
   }
-
-  button {
-    background-color: var(--googleblue-color); 
-    color: white; 
-    padding: 10px 15px;
-    border: none; 
-    border-radius: 4px; 
-    cursor: pointer; 
-    
-    &:hover {
-      filter: brightness(70%);
-    }
-  }
 `;
+
+const StyledButton = styled.button`
+  background-color: var(--googleblue-color); 
+  color: white; 
+  padding: 10px 15px;
+  border: none; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  
+  &:hover {
+    filter: brightness(70%);
+  }
+`

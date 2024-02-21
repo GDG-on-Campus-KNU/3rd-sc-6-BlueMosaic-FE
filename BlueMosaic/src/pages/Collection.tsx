@@ -31,8 +31,8 @@ export const Collection = () => {
             {mediaData.map((item, key) => (
               <MiniFrameSVG
                 key={item.id}
-                imageUrl={item.url}
-                text={item.fileName}
+                imageUrl={item.base64EncodedImage}
+                text={item.fileType}
                 date={item.fileName}
                 handleCircleClickParent={""}
               />

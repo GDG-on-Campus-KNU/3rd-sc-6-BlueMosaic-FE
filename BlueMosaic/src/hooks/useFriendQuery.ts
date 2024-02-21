@@ -45,7 +45,7 @@ export const FriendApis = {
   delete: async () => {
     try {
       const res = await FriendApis.instance.delete(
-        `/friends/${data.friendUserId}`);
+        `/friends/${FriendInfoStore.getState().friendId}`);
       console.log(res);
       return res.data;
     } catch (error) {

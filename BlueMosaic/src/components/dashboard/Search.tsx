@@ -76,6 +76,11 @@ export const Search = () => {
     }
   };
 
+  const handleExchangeCollection = async () => {
+    // Implement logic for exchanging collection
+  };
+  
+
   return (
     <>
       <SearchBar>
@@ -113,7 +118,9 @@ export const Search = () => {
       </SearchBar>
 
       <ButtomButtons>
-        <button onClick={handleAddFriend}>Add Friend</button>
+        <button onClick={isExchangeMode ? handleExchangeCollection : handleAddFriend}>
+          {isExchangeMode ? 'Exchange Collection' : 'Add Friend'}
+        </button>
         <button onClick={handleFriendList}>{isExchangeMode ? 'Back to Friend List' : 'Friend List'}</button>
       </ButtomButtons>
     </>

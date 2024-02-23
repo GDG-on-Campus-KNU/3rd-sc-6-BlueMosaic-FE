@@ -67,36 +67,63 @@ export const Achievements = () => {
     fetchData();
   }, []);
 
-
   return (
     <AchievementsWrapper>
       {AchievementInfoStore.getState().cleaner[0] && (
-        <AchievementsFish>
+        <AchievementsFish color="--googleblue-color">
           <span>{"experiencedCleaner012"}</span>
         </AchievementsFish>
       )}
 
       {AchievementInfoStore.getState().diver[0] || (
-        <AchievementsFish>
+        <AchievementsFish color="--googleyellow-color">
           <span>{"dolphin"}</span>
         </AchievementsFish>
       )}
 
       {AchievementInfoStore.getState().photographer[0] || (
-        <AchievementsFish>
+        <AchievementsFish color="--googleRed-color">
           <span>{"novicePhotographer"}</span>
         </AchievementsFish>
       )}
 
       {AchievementInfoStore.getState().pioneer[0] || (
-        <AchievementsFish>
-          <span>{AchievementInfoStore.getState().pioneer[0]}</span>
+        <AchievementsFish color="--googlegreen-color">
+          <span>{"pioneer"}</span>
         </AchievementsFish>
       )}
     </AchievementsWrapper>
+  );
+};
 
-  )
-}
+// ... 이전 코드 ...
+
+export const AchievementsFish = styled.section`
+  max-height: 100%;
+  display: flex;
+  flex-shrink: 0;
+  align-self: stretch;
+  ${Center}
+  padding: 0.33rem 1.25rem;
+  border-radius: 1.25rem;
+  border: 2px solid var(--googleblue-color);
+  background: var(--white-color);
+  font-family: Poppins;
+
+  ${({ color }) => `
+    border-color: var(${color});
+  `}
+
+  span {
+    display: flex;
+    ${Center}
+    align-self: stretch;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-size: 0.825rem;
+    font-weight: 700;
+    line-height: 1.625rem;
+  }
+`;
 
 export const AchievementsWrapper = styled.section`
 display: flex;
@@ -104,29 +131,6 @@ justify-content: flex-end;
 align-items: center;
 gap: 0.9375rem;
 flex-shrink: 0;
-margin: 0.25rem;
+margin: 0.50rem;
 margin-left: auto;
-`
-
-export const AchievementsFish = styled.section`
-max-height: 100%;
-display: flex;
-flex-shrink: 0;
-align-self: stretch;
-${Center}
-padding: 0.63rem 1.25rem;
-border-radius: 1.25rem;
-border: 2px solid var(--googleblue-color);
-background: var(--white-color);
-
-span {
-  display: flex;
-  ${Center}
-  align-self: stretch;
-  font-feature-settings: 'clig' off, 'liga' off;
-  font-family: Poppins;
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 1.625rem;
-}
 `

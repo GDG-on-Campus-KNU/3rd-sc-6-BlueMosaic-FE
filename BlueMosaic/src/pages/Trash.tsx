@@ -4,11 +4,11 @@ import { Wrapper, Container} from "../styles/Layout"
 import HomeSVG from "../assets/HomeSVG.svg"
 import WaterWave from 'react-water-wave';
 import PolaroidSVG from "../assets/Polaroid.svg"
-import imageUrl from "../assets/UploadBackground.jpg"
 import { Frame } from "../components/FrameSVG";
 import { Toast } from "../components/Toast";
-import { MediaApis } from "../hooks/useMediaQuery";
 import { useNavigate } from 'react-router-dom';
+import { WasteApis } from '../hooks/useWasteQuery';
+WasteApis
 
 export const Trash = () => {
   const [showFrame, setShowFrame] = useState(false);
@@ -47,7 +47,9 @@ export const Trash = () => {
     }
 
     try {
-      const response = await MediaApis.upload(formData);
+      const response = await WasteApis.get(formData);
+      //test
+      //WasteApis.create();
       console.log("Upload Response:", response);
       setShowFrame(true);
     } catch (error) {

@@ -15,19 +15,48 @@ export const Achievements = () => {
         const data = await AchievementsApis.get();
         console.log("data", data);
 
-        // 가장 높은 등급이 0번째 오도록, 넣는다. 따라서 앞에다가 계속 넣어야한다.
-        // 자료는 다음과 같다 0은 파싱을 위한 기준
-        // 11, 12, 13 1이라는 카테고리의 1번째, 2번째, 3번째
-        // "sproutCleaner013": true, [2번째]
-        // "experiencedCleaner012": true, [1]번째
-        // "skilledCleaner011": true, [0]번째
+      const cleanerAchievements: string[] = [];
+      const diverAchievements: string[] = [];
+      const photographerAchievements: string[] = [];
+      const pioneerAchievements: string[] = [];
+      
+        const sortedAchievements = Object.entries(data)
+    .filter(([key, value]: [string, unknown]) => /0\d{2}$/.test(key) && typeof value === "boolean")
+    .sort((a, b) => {
+      const categoryA = parseInt(a[0][0]);
+      const categoryB = parseInt(b[0][0]);
+      const gradeA = parseInt(a[0].substring(1));
+      const gradeB = parseInt(b[0].substring(1));
 
-        //Cleaner
-        AchievementInfo.setCleaner([]);
-        //setDriver
-        AchievementInfo.setDiver([]);
-        AchievementInfo.setPhotographer([]);
-        AchievementInfo.setPioneer([]);
+      if (categoryA !== categoryB) {
+        return categoryA - categoryB; // 정렬 기준 1: 카테고리
+      } else {
+        return gradeB - gradeA; // 정렬 기준 2: 등급
+      }
+    }) as [string, boolean][];
+
+      console.log(sortedAchievements);
+      
+      sortedAchievements.forEach(([key, value]) => {
+        if (value === true) {
+          if (key.includes("Cleaner")) {
+            cleanerAchievements.unshift(key);
+          } else if (key.includes("Diver")) {
+            diverAchievements.unshift(key);
+          } else if (key.includes("Photographer")) {
+            photographerAchievements.unshift(key);
+          } else if (key.includes("Pioneer")) {
+            pioneerAchievements.unshift(key);
+          }
+        }
+      });      
+      
+      AchievementInfo.setCleaner(cleanerAchievements);
+      AchievementInfo.setDiver(diverAchievements);
+      AchievementInfo.setPhotographer(photographerAchievements);
+      AchievementInfo.setPioneer(pioneerAchievements);
+
+
       } catch (error) {
         console.error("Error fetching achievements:", error);
       }
@@ -39,22 +68,31 @@ export const Achievements = () => {
 
   return (
     <AchievementsWrapper>
-      <AchievementsFish>
-        <span>{AchievementInfoStore.getState().cleaner}</span>
-      </AchievementsFish>
+      {AchievementInfoStore.getState().cleaner[0] && (
+        <AchievementsFish>
+          <span>{AchievementInfoStore.getState().cleaner[0]}</span>
+        </AchievementsFish>
+      )}
 
-      <AchievementsFish>
-        <span>{AchievementInfoStore.getState().diver[0]}</span>
-      </AchievementsFish>
+      {AchievementInfoStore.getState().diver[0] && (
+        <AchievementsFish>
+          <span>{AchievementInfoStore.getState().diver[0]}</span>
+        </AchievementsFish>
+      )}
 
-      <AchievementsFish>
-        <span>{AchievementInfoStore.getState().photographer[0]}</span>
-      </AchievementsFish>
+      {AchievementInfoStore.getState().photographer[0] && (
+        <AchievementsFish>
+          <span>{AchievementInfoStore.getState().photographer[0]}</span>
+        </AchievementsFish>
+      )}
 
-      <AchievementsFish>
-        <span>{AchievementInfoStore.getState().pioneer[0]}</span>
-      </AchievementsFish>
+      {AchievementInfoStore.getState().pioneer[0] && (
+        <AchievementsFish>
+          <span>{AchievementInfoStore.getState().pioneer[0]}</span>
+        </AchievementsFish>
+      )}
     </AchievementsWrapper>
+
   )
 }
 

@@ -24,6 +24,7 @@ export const Achievements = () => {
 
         //Cleaner
         AchievementInfo.setCleaner([]);
+        //setDriver
         AchievementInfo.setDiver([]);
         AchievementInfo.setPhotographer([]);
         AchievementInfo.setPioneer([]);

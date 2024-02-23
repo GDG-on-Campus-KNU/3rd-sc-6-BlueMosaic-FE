@@ -10,7 +10,7 @@ export const AchievementsApis = {
   // 업적 조회
   get: async () => {
     try {
-      const res = await AchievementsApis.instance.post('/check', { userId: UserInfoStore.getState().userId });
+      const res = await AchievementsApis.instance.post('/check/${userId: UserInfoStore.getState().userId}');
       console.log(res);
       return res.data;
     } catch (error) {

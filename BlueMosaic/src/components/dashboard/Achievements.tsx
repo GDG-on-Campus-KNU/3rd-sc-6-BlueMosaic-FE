@@ -10,9 +10,9 @@ export const Achievements = () => {
   const AchievementInfo = useStore(AchievementInfoStore);
   const [toggleClick, setToggleClick] = useState(false);
 
-  const handleToggle = (index: number) => {
-    AchievementInfo.toggle(index);
-    console.log(index);
+  const handleToggle = (index: number, type: number) => {
+    AchievementInfo.toggle(index, type);
+    console.log(index, type);
   };
 
   const handleToggleClick = () => {
@@ -84,8 +84,8 @@ export const Achievements = () => {
           {toggleClick ? (
             <span>{AchievementInfoStore.getState().cleaner[AchievementInfoStore.getState().select[0]]}</span>
           ) : (
-            AchievementInfoStore.getState().cleaner.map((item, index) => (
-              <span key={index} onClick={() => handleToggle(index)}>{item}</span>
+            AchievementInfoStore.getState().cleaner.map((item, index) => ( 
+              <span key={index} onClick={() => handleToggle(index, 0)}>{item}</span>
             ))
           )}
         </AchievementsFish>

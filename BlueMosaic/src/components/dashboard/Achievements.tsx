@@ -93,22 +93,40 @@ export const Achievements = () => {
       )}
 
 
-      {AchievementInfoStore.getState().diver[0] || (
-        <AchievementsFish color="--googleyellow-color">
-          <span>{AchievementInfoStore.getState().diver[AchievementInfoStore.getState().select[1]]}</span>
-        </AchievementsFish>
+      {AchievementInfoStore.getState().diver[0] && (
+        <AchievementsFish color="--googleyellow-color" Click={handleToggleClick}>
+        {toggleClick ? (
+          <span onClick={handleToggleClick}>{AchievementInfoStore.getState().diver[AchievementInfoStore.getState().select[1]]}</span>
+        ) : (
+          AchievementInfoStore.getState().diver.map((item, index) => ( 
+            <span key={index} onClick={() => { handleToggle(index, 0); handleToggleClick(); }}>{item}</span>
+          ))
+        )}
+      </AchievementsFish>
       )}
 
-      {AchievementInfoStore.getState().photographer[0] || (
-        <AchievementsFish color="--googleRed-color">
-          <span>{AchievementInfoStore.getState().photographer[AchievementInfoStore.getState().select[2]]}</span>
-        </AchievementsFish>
+      {AchievementInfoStore.getState().photographer[0] && (
+        <AchievementsFish color="--googleRed-color" Click={handleToggleClick}>
+        {toggleClick ? (
+          <span onClick={handleToggleClick}>{AchievementInfoStore.getState().photographer[AchievementInfoStore.getState().select[2]]}</span>
+        ) : (
+          AchievementInfoStore.getState().photographer.map((item, index) => ( 
+            <span key={index} onClick={() => { handleToggle(index, 0); handleToggleClick(); }}>{item}</span>
+          ))
+        )}
+      </AchievementsFish>
       )}
 
-      {AchievementInfoStore.getState().pioneer[0] || (
-        <AchievementsFish color="--googlegreen-color">
-          <span>{AchievementInfoStore.getState().pioneer[AchievementInfoStore.getState().select[3]]}</span>
-        </AchievementsFish>
+      {AchievementInfoStore.getState().pioneer[0] && (
+        <AchievementsFish color="--googlegreen-color" Click={handleToggleClick}>
+        {toggleClick ? (
+          <span onClick={handleToggleClick}>{AchievementInfoStore.getState().pioneer[AchievementInfoStore.getState().select[3]]}</span>
+        ) : (
+          AchievementInfoStore.getState().pioneer.map((item, index) => ( 
+            <span key={index} onClick={() => { handleToggle(index, 0); handleToggleClick(); }}>{item}</span>
+          ))
+        )}
+      </AchievementsFish>
       )}
     </AchievementsWrapper>
   );

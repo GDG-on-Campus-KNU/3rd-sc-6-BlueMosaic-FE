@@ -157,6 +157,7 @@ export const AchievementsFish = styled.section`
     font-size: 0.825rem;
     font-weight: 700;
     line-height: 1.625rem;
+    padding: 0 1rem;
   }
 `;
 

@@ -39,17 +39,19 @@ export const Achievements = () => {
       
       sortedAchievements.forEach(([key, value]) => {
         if (value === true) {
-          if (key.includes("Cleaner")) {
-            cleanerAchievements.unshift(key);
-          } else if (key.includes("Diver")) {
-            diverAchievements.unshift(key);
-          } else if (key.includes("Photographer")) {
-            photographerAchievements.unshift(key);
-          } else if (key.includes("Pioneer")) {
-            pioneerAchievements.unshift(key);
+          const cleanedKey = key.replace(/\d/g, '');
+          if (cleanedKey.includes("Cleaner")) {
+            cleanerAchievements.push(cleanedKey);
+          } else if (cleanedKey.includes("Diver")) {
+            diverAchievements.push(cleanedKey);
+          } else if (cleanedKey.includes("Photographer")) {
+            photographerAchievements.push(cleanedKey);
+          } else if (cleanedKey.includes("Pioneer")) {
+            pioneerAchievements.push(cleanedKey);
           }
         }
-      });      
+      });
+            
       
       AchievementInfo.setCleaner(cleanerAchievements);
       AchievementInfo.setDiver(diverAchievements);
@@ -70,23 +72,23 @@ export const Achievements = () => {
     <AchievementsWrapper>
       {AchievementInfoStore.getState().cleaner[0] && (
         <AchievementsFish>
-          <span>{AchievementInfoStore.getState().cleaner[0]}</span>
+          <span>{"experiencedCleaner012"}</span>
         </AchievementsFish>
       )}
 
-      {AchievementInfoStore.getState().diver[0] && (
+      {AchievementInfoStore.getState().diver[0] || (
         <AchievementsFish>
-          <span>{AchievementInfoStore.getState().diver[0]}</span>
+          <span>{"dolphin"}</span>
         </AchievementsFish>
       )}
 
-      {AchievementInfoStore.getState().photographer[0] && (
+      {AchievementInfoStore.getState().photographer[0] || (
         <AchievementsFish>
-          <span>{AchievementInfoStore.getState().photographer[0]}</span>
+          <span>{"novicePhotographer"}</span>
         </AchievementsFish>
       )}
 
-      {AchievementInfoStore.getState().pioneer[0] && (
+      {AchievementInfoStore.getState().pioneer[0] || (
         <AchievementsFish>
           <span>{AchievementInfoStore.getState().pioneer[0]}</span>
         </AchievementsFish>

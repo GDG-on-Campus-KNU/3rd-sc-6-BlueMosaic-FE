@@ -2,12 +2,23 @@ import styled from "@emotion/styled"
 import { Center } from "../../styles/Layout"
 import { AchievementsApis } from "../../hooks/useAchivementsQuery"
 import { AchievementInfoStore } from "../../stores/AchievementStore"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useStore } from "zustand"
 
 export const Achievements = () => {
 
   const AchievementInfo = useStore(AchievementInfoStore);
+  const [toggleClick, setToggleClick] = useState(false);
+
+  const handleToggle = (index: number, type: number) => {
+    AchievementInfo.toggle(index, type);
+    console.log(`index: ${index}, selected[${type}]`);
+  };
+
+  const handleToggleClick = () => {
+    setToggleClick(!toggleClick);
+    console.log("toggleClick", toggleClick);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,18 +26,50 @@ export const Achievements = () => {
         const data = await AchievementsApis.get();
         console.log("data", data);
 
-        // 가장 높은 등급이 0번째 오도록, 넣는다. 따라서 앞에다가 계속 넣어야한다.
-        // 자료는 다음과 같다 0은 파싱을 위한 기준
-        // 11, 12, 13 1이라는 카테고리의 1번째, 2번째, 3번째
-        // "sproutCleaner013": true, [2번째]
-        // "experiencedCleaner012": true, [1]번째
-        // "skilledCleaner011": true, [0]번째
+      const cleanerAchievements: string[] = [];
+      const diverAchievements: string[] = [];
+      const photographerAchievements: string[] = [];
+      const pioneerAchievements: string[] = [];
+      
+        const sortedAchievements = Object.entries(data)
+    .filter(([key, value]: [string, unknown]) => /0\d{2}$/.test(key) && typeof value === "boolean")
+    .sort((a, b) => {
+      const categoryA = parseInt(a[0][0]);
+      const categoryB = parseInt(b[0][0]);
+      const gradeA = parseInt(a[0].substring(1));
+      const gradeB = parseInt(b[0].substring(1));
 
-        //Cleaner
-        AchievementInfo.setCleaner([]);
-        AchievementInfo.setDiver([]);
-        AchievementInfo.setPhotographer([]);
-        AchievementInfo.setPioneer([]);
+      if (categoryA !== categoryB) {
+        return categoryA - categoryB; // 정렬 기준 1: 카테고리
+      } else {
+        return gradeB - gradeA; // 정렬 기준 2: 등급
+      }
+    }) as [string, boolean][];
+
+      console.log(sortedAchievements);
+      
+      sortedAchievements.forEach(([key, value]) => {
+        if (value === true) {
+          const cleanedKey = key.replace(/\d/g, '');
+          if (cleanedKey.includes("Cleaner")) {
+            cleanerAchievements.unshift(cleanedKey);
+          } else if (cleanedKey.includes("Diver")) {
+            diverAchievements.unshift(cleanedKey);
+          } else if (cleanedKey.includes("Photographer")) {
+            photographerAchievements.unshift(cleanedKey);
+          } else if (cleanedKey.includes("Pioneer")) {
+            pioneerAchievements.unshift(cleanedKey);
+          }
+        }
+      });
+            
+      
+      AchievementInfo.setCleaner(cleanerAchievements);
+      AchievementInfo.setDiver(diverAchievements);
+      AchievementInfo.setPhotographer(photographerAchievements);
+      AchievementInfo.setPioneer(pioneerAchievements);
+
+
       } catch (error) {
         console.error("Error fetching achievements:", error);
       }
@@ -35,27 +78,88 @@ export const Achievements = () => {
     fetchData();
   }, []);
 
-
   return (
     <AchievementsWrapper>
-      <AchievementsFish>
-        <span>{AchievementInfoStore.getState().cleaner}</span>
-      </AchievementsFish>
+      {AchievementInfoStore.getState().cleaner[0] && (
+        <AchievementsFish color="--googleblue-color" Click={handleToggleClick}>
+          {toggleClick ? (
+            <span onClick={handleToggleClick}>{AchievementInfoStore.getState().cleaner[AchievementInfoStore.getState().select[0]]}</span>
+          ) : (
+            AchievementInfoStore.getState().cleaner.map((item, index) => ( 
+              <span key={index} onClick={() => { handleToggle(index, 0); handleToggleClick(); }}>{item}</span>
+            ))
+          )}
+        </AchievementsFish>
+      )}
 
-      <AchievementsFish>
-        <span>{AchievementInfoStore.getState().diver[0]}</span>
-      </AchievementsFish>
 
-      <AchievementsFish>
-        <span>{AchievementInfoStore.getState().photographer[0]}</span>
+      {AchievementInfoStore.getState().diver[0] && (
+        <AchievementsFish color="--googleyellow-color" Click={handleToggleClick}>
+        {toggleClick ? (
+          <span onClick={handleToggleClick}>{AchievementInfoStore.getState().diver[AchievementInfoStore.getState().select[1]]}</span>
+        ) : (
+          AchievementInfoStore.getState().diver.map((item, index) => ( 
+            <span key={index} onClick={() => { handleToggle(index, 0); handleToggleClick(); }}>{item}</span>
+          ))
+        )}
       </AchievementsFish>
+      )}
 
-      <AchievementsFish>
-        <span>{AchievementInfoStore.getState().pioneer[0]}</span>
+      {AchievementInfoStore.getState().photographer[0] && (
+        <AchievementsFish color="--googleRed-color" Click={handleToggleClick}>
+        {toggleClick ? (
+          <span onClick={handleToggleClick}>{AchievementInfoStore.getState().photographer[AchievementInfoStore.getState().select[2]]}</span>
+        ) : (
+          AchievementInfoStore.getState().photographer.map((item, index) => ( 
+            <span key={index} onClick={() => { handleToggle(index, 0); handleToggleClick(); }}>{item}</span>
+          ))
+        )}
       </AchievementsFish>
+      )}
+
+      {AchievementInfoStore.getState().pioneer[0] && (
+        <AchievementsFish color="--googlegreen-color" Click={handleToggleClick}>
+        {toggleClick ? (
+          <span onClick={handleToggleClick}>{AchievementInfoStore.getState().pioneer[AchievementInfoStore.getState().select[3]]}</span>
+        ) : (
+          AchievementInfoStore.getState().pioneer.map((item, index) => ( 
+            <span key={index} onClick={() => { handleToggle(index, 0); handleToggleClick(); }}>{item}</span>
+          ))
+        )}
+      </AchievementsFish>
+      )}
     </AchievementsWrapper>
-  )
-}
+  );
+};
+
+// ... 이전 코드 ...
+
+export const AchievementsFish = styled.section`
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-self: stretch;
+  border-radius: 1.25rem;
+  border: 2px solid var(--googleblue-color);
+  background: var(--white-color);
+  font-family: Poppins;
+
+  ${({ color }) => `
+    border-color: var(${color});
+  `}
+
+  span {
+    display: flex;
+    ${Center}
+    align-self: stretch;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-size: 0.825rem;
+    font-weight: 700;
+    line-height: 1.625rem;
+    padding: 0 1rem;
+  }
+`;
 
 export const AchievementsWrapper = styled.section`
 display: flex;
@@ -63,29 +167,6 @@ justify-content: flex-end;
 align-items: center;
 gap: 0.9375rem;
 flex-shrink: 0;
-margin: 0.25rem;
+margin: 0.50rem;
 margin-left: auto;
-`
-
-export const AchievementsFish = styled.section`
-max-height: 100%;
-display: flex;
-flex-shrink: 0;
-align-self: stretch;
-${Center}
-padding: 0.63rem 1.25rem;
-border-radius: 1.25rem;
-border: 2px solid var(--googleblue-color);
-background: var(--white-color);
-
-span {
-  display: flex;
-  ${Center}
-  align-self: stretch;
-  font-feature-settings: 'clig' off, 'liga' off;
-  font-family: Poppins;
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 1.625rem;
-}
 `

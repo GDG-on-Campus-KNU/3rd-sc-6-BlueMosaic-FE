@@ -28,7 +28,7 @@ export const Collection = () => {
         <Dashboard currentPage="Collection">
           {/* Grid */}
           <GridContainer>
-            {mediaData.map((item, key) => (
+            {/* {mediaData.map((item, key) => (
               <MiniFrameSVG
                 key={item.id}
                 imageUrl={item.base64EncodedImage}
@@ -36,7 +36,7 @@ export const Collection = () => {
                 date={item.fileName}
                 handleCircleClickParent={""}
               />
-            ))}
+            ))} */}
           </GridContainer>
         </Dashboard>
       </Container>

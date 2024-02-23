@@ -12,11 +12,12 @@ export const Achievements = () => {
 
   const handleToggle = (index: number, type: number) => {
     AchievementInfo.toggle(index, type);
-    console.log(index, type);
+    console.log(`index: ${index}, selected[${type}]`);
   };
 
   const handleToggleClick = () => {
     setToggleClick(!toggleClick);
+    console.log("toggleClick", toggleClick);
   };
 
   useEffect(() => {
@@ -82,10 +83,10 @@ export const Achievements = () => {
       {AchievementInfoStore.getState().cleaner[0] && (
         <AchievementsFish color="--googleblue-color" Click={handleToggleClick}>
           {toggleClick ? (
-            <span>{AchievementInfoStore.getState().cleaner[AchievementInfoStore.getState().select[0]]}</span>
+            <span onClick={handleToggleClick}>{AchievementInfoStore.getState().cleaner[AchievementInfoStore.getState().select[0]]}</span>
           ) : (
             AchievementInfoStore.getState().cleaner.map((item, index) => ( 
-              <span key={index} onClick={() => handleToggle(index, 0)}>{item}</span>
+              <span key={index} onClick={() => { handleToggle(index, 0); handleToggleClick(); }}>{item}</span>
             ))
           )}
         </AchievementsFish>

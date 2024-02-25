@@ -49,18 +49,18 @@ export const Ocean = () => {
     }
 
     try {
-      const resFriend = MarineApis.uploadFriend(formData);
-      console.log(resFriend);
-      // const response = await MarineApis.upload(formData);
-      // console.log("Upload Response:", response);
-      // const formattedData = response.map(item => ({
-      //   score: item.score,
-      //   total: item.total,
-      //   names: item.names.join(', '), // Assuming names is an array
-      // }));
+      // const resFriend = MarineApis.uploadFriend(formData);
+      // console.log(resFriend);
+      const response = await MarineApis.upload(formData);
+      console.log("Upload Response:", response);
+      const formattedData = response.map(item => ({
+        score: item.score,
+        total: item.total,
+        names: item.names.join(', '), // Assuming names is an array
+      }));
       
-      // setReturndata(formattedData);
-      // console.log(formattedData);
+      setReturndata(formattedData);
+      console.log(formattedData);
 
       setShowSmartphone(true);
     } catch (error) {

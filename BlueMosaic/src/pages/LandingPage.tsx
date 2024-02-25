@@ -3,8 +3,7 @@ import { keyframes } from "@emotion/react";
 import firstSVG from "../assets/First.svg";
 import secondSVG from "../assets/Second.svg";
 import thirdSVG from "../assets/Third.svg";
-import Play from "../assets/Play.svg"
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 const Content = ({ title, subtitle, handleClickStart, handleClickWatch }: { title: string; subtitle: string; handleClickStart: () => void; handleClickWatch: () => void; }) => (

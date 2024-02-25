@@ -3,6 +3,7 @@ import { TrashInfoStore } from "../../stores/TrashStore";
 import { RankingApis } from "../../hooks/useRankingQuery";
 import { useEffect, useState } from "react";
 import { FriendInfoStore } from "../../stores/FriendStore";
+import { CircleSVG } from "./CircleSVG";
 
 export const RankingList = () => {
   const [data, setData] = useState([]);
@@ -41,13 +42,13 @@ export const RankingList = () => {
           </BehindSecondDiv>
 
           <FrontDiv>
-            <img src={data && data[0]?.userImageUrl} alt="img"/>
+            <CircleSVG imageUrl={data && data[0]?.userImageUrl}/>
+            {/* <img src={data && data[0]?.userImageUrl} alt="img"/> */}
             <span>{"thirdName"}</span>
             <em>{data && data[0]?.score}P</em>
           </FrontDiv>
 
           <BehindThirdDiv>
-            <img src={data && data[1]?.userImageUrl} alt="img"/>
             <span>{"thirdName"}</span>
             <em>{data && data[1]?.score}P</em>
         </BehindThirdDiv>

@@ -66,12 +66,12 @@ export const LandingPage = () => {
 
 return(  
   <StyledLandingPage>
-<Content
-  title={contentInfo.title}
-  subtitle={contentInfo.subtitle}
-  handleClickStart={handleClickStart}
-  handleClickWatch={handleClickWatch}
-  />
+    <Content
+      title={contentInfo.title}
+      subtitle={contentInfo.subtitle}
+      handleClickStart={handleClickStart}
+      handleClickWatch={handleClickWatch}
+    />
     
     <ImageContainer zIndex={3} clicked={clicked === 3}>
       <img

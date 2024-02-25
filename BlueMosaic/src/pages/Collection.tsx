@@ -4,7 +4,7 @@ import styled from "@emotion/styled"
 import { Dashboard } from "../components/dashboard/dashboard"
 import { MiniFrameSVG } from "../components/dashboard/MiniFrameSVG"
 import HomeSVG from "../assets/HomeSVG.svg"
-import { MediaApis } from "../hooks/useMediaQuery"
+import { MarineApis } from '../hooks/useMarineQuery';
 
 export const Collection = () => {
   const [mediaData, setMediaData] = useState([]);
@@ -12,8 +12,8 @@ export const Collection = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await MediaApis.get(1);
-        setMediaData(response.data);
+        const response = await MarineApis.getCollection();
+        setMediaData(response);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -28,15 +28,15 @@ export const Collection = () => {
         <Dashboard currentPage="Collection">
           {/* Grid */}
           <GridContainer>
-            {/* {mediaData.map((item, key) => (
+            { mediaData && mediaData.map((item, key) => (
               <MiniFrameSVG
                 key={item.id}
                 imageUrl={item.base64EncodedImage}
-                text={item.fileType}
-                date={item.fileName}
+                text={item.className}
+                date={item.date}
                 handleCircleClickParent={""}
               />
-            ))} */}
+            ))}
           </GridContainer>
         </Dashboard>
       </Container>

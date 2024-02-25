@@ -29,7 +29,7 @@ export const WasteApis = {
   get: async (formData: FormData) => {
     try {
       const res = await WasteApis.instance.post('', formData);
-      console.log(res);
+      console.log("check",res);
       return res.data;
     } catch (error) {
       alert(`[Can't recognize] Please add a clearer picture`)

@@ -76,5 +76,17 @@ export const MarineApis = {
       alert(`[Can't recognize] Please add `)
       throw error;
     }
+  }, 
+
+  // 사용자가 모은 해양 생물 정보를 조회
+  getCollectionDummy: async () => {
+    try {
+      const res = await MarineApis.instance.get(`/retrieve/${2}`);
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      alert(`[Can't recognize] Please add `)
+      throw error;
+    }
   },  
 };

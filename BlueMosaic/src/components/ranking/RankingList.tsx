@@ -1,18 +1,25 @@
 import styled from "@emotion/styled"
 import { TrashInfoStore } from "../../stores/TrashStore";
+import { FriendInfoStore } from "../../stores/FriendStore";
+import { UserInfoStore } from "../../stores/UserInfoStore";
 import { RankingApis } from "../../hooks/useRankingQuery";
 import { useEffect, useState } from "react";
-import { FriendInfoStore } from "../../stores/FriendStore";
 import { CircleSVG } from "./CircleSVG";
 
 export const RankingList = () => {
   const [data, setData] = useState([]);
+  const [mydata, setMydata] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await RankingApis.get();
         setData(result);
+          
+        const currentUserId = UserInfoStore.getState().userId;
+        const currentUserData = result.find(item => item.userId === currentUserId);
+        setMydata(currentUserData);
+        console.log(currentUserData);
         console.log(data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -29,30 +36,34 @@ export const RankingList = () => {
       <MyScore>
         <section>
           <span>My score</span>
-          <div>{TrashInfoStore.getState().totalScore}P</div>
+          <div>{mydata && mydata.score}P</div>
         </section>
       </MyScore>
 
 
       <RankingTop>
-          <BehindSecondDiv>
-            <img src={data && data[2]?.userImageUrl} alt="img"/>
-            <span>{"data && data[2].username"}</span>
-            <em>{data && data[2]?.score}</em>
-          </BehindSecondDiv>
+  {data.length > 0 && (
+    <>
+      <BehindSecondDiv>
+        <CircleSVG imageUrl={data[1]?.userImageUrl} ranking="2"/>
+        <span>{data[1]?.nickname}</span>
+        <em>{data[1]?.score}P</em>
+      </BehindSecondDiv>
 
-          <FrontDiv>
-            <CircleSVG imageUrl={data && data[0]?.userImageUrl}/>
-            {/* <img src={data && data[0]?.userImageUrl} alt="img"/> */}
-            <span>{"thirdName"}</span>
-            <em>{data && data[0]?.score}P</em>
-          </FrontDiv>
+      <FrontDiv>
+        <CircleSVG imageUrl={data[0]?.userImageUrl} ranking="1"/>
+        <span>{data[0]?.nickname}</span>
+        <em>{data[0]?.score}P</em>
+      </FrontDiv>
 
-          <BehindThirdDiv>
-            <span>{"thirdName"}</span>
-            <em>{data && data[1]?.score}P</em>
-        </BehindThirdDiv>
-      </RankingTop>
+      <BehindThirdDiv>
+        <CircleSVG imageUrl={data[2]?.userImageUrl} ranking="3"/>
+        <span>{data[2]?.nickname}</span>
+        <em>{data[2]?.score}P</em>
+      </BehindThirdDiv>
+    </>
+  )}
+</RankingTop>
 
       <RankingMine>
         <Mine>

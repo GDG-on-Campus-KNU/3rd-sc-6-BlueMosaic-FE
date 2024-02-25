@@ -50,7 +50,8 @@ export const Trash = () => {
       const response = await WasteApis.get(formData);
       //test
       //WasteApis.create();
-      console.log("Upload Response:", response);
+      // console.log("Upload Response:", response);
+
       setShowFrame(true);
     } catch (error) {
       console.error('Error uploading file:', error);

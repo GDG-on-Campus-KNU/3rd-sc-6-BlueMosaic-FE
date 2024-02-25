@@ -17,7 +17,8 @@ export const FriendApis = {
       console.log(res);
       return res.data;
     } catch (error) {
-      console.error('Error fetching rooms:', error);
+      // 이미 친구가 되어있는 경우
+      console.error('이미 친구가 되어있습니다 :', error);
       throw error;
     }
   },
@@ -30,7 +31,8 @@ export const FriendApis = {
       console.log(res);
       return res.data;
     } catch (error) {
-      console.error('Error fetching rooms:', error);
+      //
+      console.error('해당하는 유저가 없습니다 :', error);
       throw error;
     }
   },

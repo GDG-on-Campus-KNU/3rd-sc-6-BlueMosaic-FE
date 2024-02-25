@@ -1,6 +1,26 @@
 import styled from "@emotion/styled"
+import { TrashInfoStore } from "../../stores/TrashStore";
+import { RankingApis } from "../../hooks/useRankingQuery";
+import { useEffect, useState } from "react";
+import { FriendInfoStore } from "../../stores/FriendStore";
 
 export const RankingList = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await RankingApis.get();
+        setData(result);
+        console.log(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []); 
+
+
   return (
     <RankingWrapper>
       <h1>Leaderboard</h1>
@@ -8,26 +28,28 @@ export const RankingList = () => {
       <MyScore>
         <section>
           <span>My score</span>
-          <div>1222P</div>
+          <div>{TrashInfoStore.getState().totalScore}P</div>
         </section>
       </MyScore>
 
 
       <RankingTop>
           <BehindSecondDiv>
-            <circle></circle>
-            <span>{"thirdName"}</span>
-            <em>{"300"}P</em>
+            <img src={data && data[2]?.userImageUrl} alt="img"/>
+            <span>{"data && data[2].username"}</span>
+            <em>{data && data[2]?.score}</em>
           </BehindSecondDiv>
 
           <FrontDiv>
+            <img src={data && data[0]?.userImageUrl} alt="img"/>
             <span>{"thirdName"}</span>
-            <em>{"300"}P</em>
+            <em>{data && data[0]?.score}P</em>
           </FrontDiv>
 
           <BehindThirdDiv>
+            <img src={data && data[1]?.userImageUrl} alt="img"/>
             <span>{"thirdName"}</span>
-            <em>{"300"}P</em>
+            <em>{data && data[1]?.score}P</em>
         </BehindThirdDiv>
       </RankingTop>
 

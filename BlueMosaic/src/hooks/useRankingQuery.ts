@@ -1,11 +1,5 @@
 import axios from 'axios';
 
-const data = {
-  "id": 0,
-  "userId": 0,
-  "score": 0
-}
-
 export const RankingApis = {
   instance: axios.create({
     baseURL: 'http://localhost:8080/ranking',
@@ -15,7 +9,7 @@ export const RankingApis = {
     // 랭킹 조회
     get: async () => {
       try {
-        const res = await RankingApis.instance.get(`/`);
+        const res = await RankingApis.instance.get(``);
         console.log(res);
         return res.data;
       } catch (error) {

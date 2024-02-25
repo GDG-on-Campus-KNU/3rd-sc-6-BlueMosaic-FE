@@ -1,6 +1,43 @@
 import styled from "@emotion/styled"
+import { TrashInfoStore } from "../../stores/TrashStore";
+import { FriendInfoStore } from "../../stores/FriendStore";
+import { FriendApis } from "../../hooks/useFriendQuery";
+import { UserInfoStore } from "../../stores/UserInfoStore";
+import { RankingApis } from "../../hooks/useRankingQuery";
+import { useEffect, useState } from "react";
+import { CircleSVG } from "./CircleSVG";
 
 export const RankingList = () => {
+  const [data, setData] = useState([]);
+  const [mydata, setMydata] = useState();
+  const [myfriend1, setMyfriend1] = useState();
+  const [myfriend2, setMyfriend2] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await RankingApis.get();
+        setData(result);
+          
+        // 본인 점수 찾기
+        const currentUserId = UserInfoStore.getState().userId;
+        const currentUserData = result.find(item => item.userId === currentUserId);
+        setMydata(currentUserData);
+
+        // 친구 점수 찾기
+        const friends = await FriendApis.find();
+        // friends 2명의 id를 저장
+        const [friends1, friends2] = friends;
+        setMyfriend1(result.find(item => item.userId === friends1.id));
+        setMyfriend2(result.find(item => item.userId === friends2.id));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []); 
+
+
   return (
     <RankingWrapper>
       <h1>Leaderboard</h1>
@@ -8,51 +45,57 @@ export const RankingList = () => {
       <MyScore>
         <section>
           <span>My score</span>
-          <div>1222P</div>
+          <div>{mydata && mydata.score}P</div>
         </section>
       </MyScore>
 
 
       <RankingTop>
-          <BehindSecondDiv>
-            <circle></circle>
-            <span>{"thirdName"}</span>
-            <em>{"300"}P</em>
-          </BehindSecondDiv>
+  {data.length > 0 && (
+    <>
+      <BehindSecondDiv>
+        <CircleSVG imageUrl={data[1]?.userImageUrl} ranking="2"/>
+        <span>{data[1]?.nickname}</span>
+        <em>{data[1]?.score}P</em>
+      </BehindSecondDiv>
 
-          <FrontDiv>
-            <span>{"thirdName"}</span>
-            <em>{"300"}P</em>
-          </FrontDiv>
+      <FrontDiv>
+        <CircleSVG imageUrl={data[0]?.userImageUrl} ranking="1"/>
+        <span>{data[0]?.nickname}</span>
+        <em>{data[0]?.score}P</em>
+      </FrontDiv>
 
-          <BehindThirdDiv>
-            <span>{"thirdName"}</span>
-            <em>{"300"}P</em>
-        </BehindThirdDiv>
-      </RankingTop>
+      <BehindThirdDiv>
+        <CircleSVG imageUrl={data[2]?.userImageUrl} ranking="3"/>
+        <span>{data[2]?.nickname}</span>
+        <em>{data[2]?.score}P</em>
+      </BehindThirdDiv>
+    </>
+  )}
+</RankingTop>
 
       <RankingMine>
         <Mine>
-          <Profile/>
+          <Profile src={mydata && mydata.userImageUrl} alt="Profile Image" />
           <div>
-            <span>이름</span>
-            <em>100P</em>
+            <span>{mydata && mydata.nickname}</span>
+            <em>{mydata && mydata.score}P</em>
           </div>
         </Mine>
 
         <Friend>
-          <Profile/>
+          <Profile src={myfriend1 && myfriend1.userImageUrl} alt="Profile Image" />
           <div>
-            <span>이름</span>
-            <em>100P</em>
+            <span>{myfriend1 && myfriend1.nickname}</span>
+            <em>{myfriend1 && myfriend1.score}P</em>
           </div>
         </Friend>
 
         <Friend>
-          <Profile/>
+          <Profile src={myfriend2 && myfriend2.userImageUrl} alt="Profile Image" />
           <div>
-            <span>이름</span>
-            <em>100P</em>
+            <span>{myfriend2 && myfriend2.nickname}</span>
+            <em>{myfriend2 && myfriend2.score}P</em>
           </div>
         </Friend>
       </RankingMine>
@@ -69,7 +112,7 @@ const RankingWrapper = styled.div`
   align-items: stretch;
   justify-content: center;
   align-items: center;
-  gap: 2.5rem;
+  gap: 1.5rem;
   flex-shrink: 0;
   border-radius: 3.125rem 0rem 0rem 3.125rem;
   background: var(----white-color, #FFF);
@@ -80,6 +123,7 @@ const RankingWrapper = styled.div`
     font-family: Roboto;
     font-size: 2.125rem;
     font-weight: 700;
+    margin: 0;
 }` 
 
 const RankingTop = styled.div`
@@ -160,7 +204,7 @@ em{
 
 const RankingMine = styled.section`
 display: flex;
-padding: 3.125rem;
+padding: 1.125rem;
 flex-direction: column;
 justify-content: center;
 align-items: center;
@@ -187,15 +231,15 @@ em {
 `;
 
 const Profile = styled.img`
-width: 3.45275rem;
-height: 3.45275rem;
-border-radius: 3.92363rem;
-background: #D9D9D9;
+  width: 3.45275rem;
+  height: 3.45275rem;
+  border-radius: 3.92363rem;
+  content: url(${props => props.src || '#D9D9D9'});
 `;
 
 const Mine = styled.div`
 display: flex;
-padding: 0.9375rem 11.6875rem 0.9375rem 1.25rem;
+padding: 0.6375rem 11.6875rem 0.6375rem 1.25rem;
 align-items: center;
 gap: 1rem;
 align-self: stretch;

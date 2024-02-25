@@ -8,9 +8,9 @@ import { useState, ChangeEvent, FormEvent, useRef } from "react"
 import { useNavigate } from "react-router-dom";
 import { Toast } from "../components/Toast";
 import { MarineApis } from "../hooks/useMarineQuery";
-import { TrashInfoStore } from "../stores/TrashStore";
 
-export const Ocean = () => {
+// 친구 기준 화면
+export const OceanPage = () => {
   const [showSmartphone, setShowSmartphone] = useState(false);
   const [showToast, setShowToast] = useState(true);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -48,19 +48,20 @@ export const Ocean = () => {
     }
 
     try {
-      // const resFriend = MarineApis.uploadFriend(formData);
-      // console.log(resFriend);
-      const response = await MarineApis.upload(formData);
-      console.log(response);
-      console.log("Upload Response:", response);
-      const formattedData = {
-        score: response.score,
-        total: response.total,
-        names: response.marinelife.map(item => item.name).join(', '),
-      };
+      const resFriend = await MarineApis.uploadFriend(formData);
+      console.log(resFriend);
+      setReturndata(resFriend);
+      // const response = await MarineApis.upload(formData);
+      // console.log(response);
+      // console.log("Upload Response:", response);
+      // const formattedData = {
+      //   score: response.score,
+      //   total: response.total,
+      //   names: response.marinelife.map(item => item.name).join(', '),
+      // };
       
-      setReturndata(formattedData);
-      console.log(formattedData);
+      // setReturndata(formattedData);
+      // console.log(formattedData);
 
       setShowSmartphone(true);
     } catch (error) {
@@ -83,7 +84,7 @@ export const Ocean = () => {
   };
 
   const handleGoto = () => {
-    navigate("/collection");
+    navigate("/mypage");
   };
 
 
@@ -98,7 +99,7 @@ export const Ocean = () => {
                   showSmartphone ? (
                     <SmartphoneWrapper>
                       <SmartphoneSVG handleClickParent="" imageUrl={selectedImageUrl} />
-                      { showSmartphone && <Toast found={`I found ${returndata && returndata.names}`} points={`My total  score is ${returndata && returndata.total}`} handleClickUpload={handleClickUpload} handleGoto={handleGoto} button1={"Reupload"} button2={"Collection"} />}
+                      { showSmartphone && <Toast found={`Upload ${returndata && returndata.fileName}`} points={`Check your friend Collection`} handleClickUpload={handleClickUpload} handleGoto={handleGoto} button1={"Reupload"} button2={"Collection"} />}
                     </SmartphoneWrapper>
                   ) : (
                     <CamWrapper>

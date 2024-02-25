@@ -13,10 +13,9 @@ export const Frame = ({ imageUrl, text="plastic bag", point="150" }) => {
 
 const FrameWrapper = styled.div`
 display: flex;
-width: 45vh;
-height: 50vh;
+width: 65vh;
+height: 70vh;
 padding: 1.25rem 1.875rem;
-margin-bottom: 10rem;
 flex-direction: column;
 justify-content: center;
 align-items: center;
@@ -38,7 +37,7 @@ img {
 }
 
 span {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   margin: 0;
 }
 

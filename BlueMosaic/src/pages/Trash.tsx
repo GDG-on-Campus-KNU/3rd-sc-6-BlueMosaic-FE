@@ -8,7 +8,8 @@ import { Frame } from "../components/FrameSVG";
 import { Toast } from "../components/Toast";
 import { useNavigate } from 'react-router-dom';
 import { WasteApis } from '../hooks/useWasteQuery';
-WasteApis
+import { useStore } from 'zustand';
+import { TrashInfo, TrashInfoStore } from '../stores/TrashStore';
 
 export const Trash = () => {
   const [showFrame, setShowFrame] = useState(false);
@@ -17,6 +18,7 @@ export const Trash = () => {
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null); // Ref for the file input
   const navigate = useNavigate();
+  const trashinfo = useStore(TrashInfoStore);
 
   // 파일 선택 핸들러
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +52,24 @@ export const Trash = () => {
       const response = await WasteApis.get(formData);
       //test
       //WasteApis.create();
-      console.log("Upload Response:", response);
+      // console.log("Upload Response:", response);
+
+      trashinfo.setPlastic(response.plastic);
+      trashinfo.setStyrofoam(response.styrofoam);
+      trashinfo.setFiber(response.fiber);
+      trashinfo.setVinyl(response.vinyl);
+      trashinfo.setGeneralWaste(response.generalWaste);
+      trashinfo.setTotalScore(response.total);
+      trashinfo.setScore(response.score);
+
+      const nonZeroProperties = Object.keys(response)
+      .filter(key => key !== "userId" && key !== "score" && key !== "total" && response[key] !== 0);
+    
+      const classes = nonZeroProperties.join(', ');
+
+      console.log(classes); // 결과: "plastic, styrofoam"
+      trashinfo.setClasses(classes);
+
       setShowFrame(true);
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -82,7 +101,7 @@ export const Trash = () => {
           <Container>
             <PolaroidWrapper>
               {showFrame || <img src={PolaroidSVG} alt="PolaroidSVG" onClick={handleClick} />}
-              {showFrame && <Frame imageUrl={selectedImageUrl || ''} text="plastic bag" point='100'/>}
+              {showFrame && <Frame imageUrl={selectedImageUrl || ''} text={TrashInfoStore.getState().classes} point={TrashInfoStore.getState().score.toString()}/>}
               <form onSubmit={handleUpload}>
                 <input
                   id='image'
@@ -96,7 +115,7 @@ export const Trash = () => {
               </form>
               { showToast && !showFrame && <Toast found={'Information'} points={"Click the red button to upload the picture and get score points"} button1={"No thanks"} button2={"got it"} handleClickUpload={handleClickToast} handleGoto={handleClickToast}/> }
 
-              { showFrame && <Toast found={`I found ${"plastic bag"}`} points={`My total  score is ${100}`} handleClickUpload={handleClickUpload} handleGoto={handleGoto} button1={"Reupload"} button2={"Collection"} />}
+              { showFrame && <Toast found={`I found ${TrashInfoStore.getState().classes}`} points={`My total  score is ${TrashInfoStore.getState().totalScore}`} handleClickUpload={handleClickUpload} handleGoto={handleGoto} button1={"Reupload"} button2={"Collection"} />}
             </PolaroidWrapper>
           </Container>
         </Wrapper>
@@ -126,6 +145,7 @@ const StyledButton = styled.button`
   border: none; 
   border-radius: 4px; 
   cursor: pointer; 
+  margin-top: 1rem;
   
   &:hover {
     filter: brightness(70%);

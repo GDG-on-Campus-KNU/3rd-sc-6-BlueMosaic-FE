@@ -5,14 +5,20 @@ import { Dashboard } from "../components/dashboard/dashboard"
 import { MiniFrameSVG } from "../components/dashboard/MiniFrameSVG"
 import HomeSVG from "../assets/HomeSVG.svg"
 import { MarineApis } from '../hooks/useMarineQuery';
+import Modal from '../components/Modal';
+import { UserInfoStore } from '../stores/UserInfoStore';
+import { ExchangeApis } from '../hooks/useExchangeQuery';
 
-export const Collection = () => {
+export const CollectionFriend = () => {
   const [mediaData, setMediaData] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await MarineApis.getCollection();
+        const response = await MarineApis.getCollectionDummy();
+        console.log(response)
         setMediaData(response);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -22,6 +28,24 @@ export const Collection = () => {
     fetchData();
   }, []);
 
+  const handleClick = (item) => {
+    setSelectedItem(item);
+    setIsModalVisible(true);
+  }
+
+  const handleExchangeConfirm = () => {
+    setIsModalVisible(false);
+    const friendUserId = "2";
+    // console.log("selectedItem", selectedItem);
+    const res = ExchangeApis.exchange(friendUserId, selectedItem.imageId);
+    setSelectedItem(null);
+  }
+
+  const handleExchangeCancel = () => {
+    setIsModalVisible(false);
+    setSelectedItem(null);
+  }
+
   return (
     <Wrapper backgroundImage={HomeSVG} style={{ backgroundSize: 'cover' }}>
       <Container>
@@ -30,14 +54,23 @@ export const Collection = () => {
           <GridContainer>
             { mediaData && mediaData.map((item, key) => (
               <MiniFrameSVG
-                key={item.id}
+                key={item.imageId}
                 imageUrl={item.base64EncodedImage}
                 text={item.className}
                 date={item.date}
-                handleCircleClickParent={""}
+                handleCircleClickParent={() => handleClick(item)}
               />
             ))}
           </GridContainer>
+
+           {/* Modal */}
+            {isModalVisible && (
+              <Modal
+                message="Do you want to exchange?"
+                onConfirm={handleExchangeConfirm}
+                onCancel={handleExchangeCancel}
+              />
+            )}
         </Dashboard>
       </Container>
     </Wrapper>

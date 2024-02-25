@@ -12,7 +12,7 @@ export const CollectionFriend = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await MarineApis.getCollection();
+        const response = await MarineApis.getCollectionDummy();
         setMediaData(response);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -51,7 +51,7 @@ const GridContainer = styled.div`
   box-sizing: border-box;
   padding-left: 2rem;
   padding-right: 2rem;
-  grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 16px;
   align-items: stretch;
   align-content: flex-start;

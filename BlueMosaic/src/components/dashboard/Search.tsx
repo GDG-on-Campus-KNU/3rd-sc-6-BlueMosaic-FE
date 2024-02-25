@@ -8,6 +8,7 @@ import { UserApis } from '../../hooks/useUserQuery';
 import { useStore } from 'zustand';
 import { FriendInfoStore } from '../../stores/FriendStore';
 import { FriendApis } from '../../hooks/useFriendQuery';
+import { useNavigate } from 'react-router-dom';
 
 export const Search = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -15,6 +16,7 @@ export const Search = () => {
   const [chooseFriend, setChooseFriend] = useState<string | null>(null);
   const [isExchangeMode, setExchangeMode] = useState(false);
   const friendInfo = useStore(FriendInfoStore);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
@@ -77,7 +79,7 @@ export const Search = () => {
   };
 
   const handleExchangeCollection = async () => {
-    // Implement logic for exchanging collection
+    navigate("/collectionfriend")
   };
   
 

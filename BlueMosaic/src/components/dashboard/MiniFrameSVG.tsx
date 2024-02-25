@@ -1,12 +1,13 @@
 import styled from "@emotion/styled"
 
 export const MiniFrameSVG = ({ handleCircleClickParent, imageUrl, date, text }) => {
+  const formattedDate = new Date(date).toISOString().split('T')[0];
 
   return (
     <FrameWrapper>
       <img src={`data:image/png;base64, ${imageUrl}`} alt="img" />
       <span>{text}</span>
-      <p>{date}</p>
+      <p>{formattedDate}</p>
     </FrameWrapper>
     );
 }

@@ -171,7 +171,13 @@ const Button = styled.button`
   text-align: center;
   font-weight: 600;
   line-height: 1.5rem;
-`
+  cursor: pointer;  
+  transition: filter 0.3s ease; 
+
+  &:hover {
+    filter: brightness(80%);  
+  }
+`;
 
 const ButtonWrapper = styled.div`
   display: flex;

@@ -8,7 +8,8 @@ import { Frame } from "../components/FrameSVG";
 import { Toast } from "../components/Toast";
 import { useNavigate } from 'react-router-dom';
 import { WasteApis } from '../hooks/useWasteQuery';
-WasteApis
+import { useStore } from 'zustand';
+import { TrashInfo, TrashInfoStore } from '../stores/TrashStore';
 
 export const Trash = () => {
   const [showFrame, setShowFrame] = useState(false);
@@ -17,6 +18,7 @@ export const Trash = () => {
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null); // Ref for the file input
   const navigate = useNavigate();
+  const trashinfo = useStore(TrashInfoStore);
 
   // 파일 선택 핸들러
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +53,12 @@ export const Trash = () => {
       //test
       //WasteApis.create();
       // console.log("Upload Response:", response);
+      trashinfo.setPlastic(response.plastic);
+      trashinfo.setStyrofoam(response.styrofoam);
+      trashinfo.setFiber(response.fiber);
+      trashinfo.setVinyl(response.vinyl);
+      trashinfo.generalWaste(response.generalWaste);
+      console.log(trashinfo);
 
       setShowFrame(true);
     } catch (error) {

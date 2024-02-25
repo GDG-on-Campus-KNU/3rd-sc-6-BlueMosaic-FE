@@ -3,8 +3,7 @@ import { keyframes } from "@emotion/react";
 import firstSVG from "../assets/First.svg";
 import secondSVG from "../assets/Second.svg";
 import thirdSVG from "../assets/Third.svg";
-import Play from "../assets/Play.svg"
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 const Content = ({ title, subtitle, handleClickStart, handleClickWatch }: { title: string; subtitle: string; handleClickStart: () => void; handleClickWatch: () => void; }) => (
@@ -172,7 +171,13 @@ const Button = styled.button`
   text-align: center;
   font-weight: 600;
   line-height: 1.5rem;
-`
+  cursor: pointer;  
+  transition: filter 0.3s ease; 
+
+  &:hover {
+    filter: brightness(80%);  
+  }
+`;
 
 const ButtonWrapper = styled.div`
   display: flex;

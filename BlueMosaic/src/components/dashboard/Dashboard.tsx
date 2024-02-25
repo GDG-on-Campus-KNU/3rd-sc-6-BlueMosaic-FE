@@ -1,24 +1,54 @@
 import styled from "@emotion/styled"
-import GoogleSVG from "../../assets/Google.svg"
-import { Search } from "./Search"
-import { Collection } from "../../pages/Collection";
 import { Achievements } from "./Achievements"
+import { useNavigate } from "react-router-dom";
 
 interface PageItemProps {
   active?: boolean;
 }
 
 export const Dashboard = ({ currentPage, children }) => {
+  const navigate = useNavigate(); // Initialize the useNavigate hook
 
+  const handlePageItemClick = (page) => {
+    // Use the navigate function to redirect to the desired page
+    switch (page) {
+      case "Friend":
+        navigate("/mypage");
+        break;
+      case "Collection":
+        navigate("/collection");
+        break;
+      case "Event":
+        // Handle other pages if needed
+        break;
+      default:
+        break;
+    }
+  };
 
   return(
   <DashboardWrapper>
     <DashboardSidebar>
-      <ol>
-        <PageItem active={currentPage === "Friend"}>Friend</PageItem>
-        <PageItem active={currentPage === "Collection"}>Collection</PageItem>
-        <PageItem active={currentPage === "Event"}>Event</PageItem>
-      </ol>
+    <ol>
+          <PageItem
+            active={currentPage === "Friend"}
+            onClick={() => handlePageItemClick("Friend")}
+          >
+            Friend
+          </PageItem>
+          <PageItem
+            active={currentPage === "Collection"}
+            onClick={() => handlePageItemClick("Collection")}
+          >
+            Collection
+          </PageItem>
+          <PageItem
+            active={currentPage === "Event"}
+            onClick={() => handlePageItemClick("Event")}
+          >
+            Event
+          </PageItem>
+        </ol>
 
       <Achievements/>
 

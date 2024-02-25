@@ -28,9 +28,8 @@ export const RankingList = () => {
         const friends = await FriendApis.find();
         // friends 2명의 id를 저장
         const [friends1, friends2] = friends;
-        setMyfriend1(result.find(item => item.userId === friends1));
-        setMyfriend2(result.find(item => item.userId === friends2));
-        
+        setMyfriend1(result.find(item => item.userId === friends1.id));
+        setMyfriend2(result.find(item => item.userId === friends2.id));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -77,7 +76,7 @@ export const RankingList = () => {
 
       <RankingMine>
         <Mine>
-          <Profile/>
+          <Profile src={mydata && mydata.userImageUrl} alt="Profile Image" />
           <div>
             <span>{mydata && mydata.nickname}</span>
             <em>{mydata && mydata.score}P</em>
@@ -85,7 +84,7 @@ export const RankingList = () => {
         </Mine>
 
         <Friend>
-          <Profile/>
+          <Profile src={myfriend1 && myfriend1.userImageUrl} alt="Profile Image" />
           <div>
             <span>{myfriend1 && myfriend1.nickname}</span>
             <em>{myfriend1 && myfriend1.score}P</em>
@@ -93,7 +92,7 @@ export const RankingList = () => {
         </Friend>
 
         <Friend>
-          <Profile/>
+          <Profile src={myfriend2 && myfriend2.userImageUrl} alt="Profile Image" />
           <div>
             <span>{myfriend2 && myfriend2.nickname}</span>
             <em>{myfriend2 && myfriend2.score}P</em>
@@ -113,7 +112,7 @@ const RankingWrapper = styled.div`
   align-items: stretch;
   justify-content: center;
   align-items: center;
-  gap: 2.5rem;
+  gap: 1.5rem;
   flex-shrink: 0;
   border-radius: 3.125rem 0rem 0rem 3.125rem;
   background: var(----white-color, #FFF);
@@ -124,6 +123,7 @@ const RankingWrapper = styled.div`
     font-family: Roboto;
     font-size: 2.125rem;
     font-weight: 700;
+    margin: 0;
 }` 
 
 const RankingTop = styled.div`
@@ -204,7 +204,7 @@ em{
 
 const RankingMine = styled.section`
 display: flex;
-padding: 3.125rem;
+padding: 1.125rem;
 flex-direction: column;
 justify-content: center;
 align-items: center;
@@ -231,15 +231,15 @@ em {
 `;
 
 const Profile = styled.img`
-width: 3.45275rem;
-height: 3.45275rem;
-border-radius: 3.92363rem;
-background: #D9D9D9;
+  width: 3.45275rem;
+  height: 3.45275rem;
+  border-radius: 3.92363rem;
+  content: url(${props => props.src || '#D9D9D9'});
 `;
 
 const Mine = styled.div`
 display: flex;
-padding: 0.9375rem 11.6875rem 0.9375rem 1.25rem;
+padding: 0.6375rem 11.6875rem 0.6375rem 1.25rem;
 align-items: center;
 gap: 1rem;
 align-self: stretch;

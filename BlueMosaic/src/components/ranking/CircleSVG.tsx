@@ -1,5 +1,5 @@
 export const CircleSVG = ({ ranking, imageUrl }) => {
-  console.log("imageUrl",imageUrl);
+  // console.log("imageUrl",imageUrl);
   if (ranking === "1") {
     return (
       <svg width="103" height="117" viewBox="0 0 103 117" fill="none" xmlns="http://www.w3.org/2000/svg">

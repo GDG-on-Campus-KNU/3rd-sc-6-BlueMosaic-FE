@@ -4,7 +4,7 @@ export const MiniFrameSVG = ({ handleCircleClickParent, imageUrl, date, text }) 
 
   return (
     <FrameWrapper>
-      <img src={imageUrl} alt="img"/>
+      <img src={`data:image/png;base64, ${imageUrl}`} alt="img" />
       <span>{text}</span>
       <p>{date}</p>
     </FrameWrapper>

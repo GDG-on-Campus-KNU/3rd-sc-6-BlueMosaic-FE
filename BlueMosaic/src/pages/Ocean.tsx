@@ -8,12 +8,14 @@ import { useState, ChangeEvent, FormEvent, useRef } from "react"
 import { useNavigate } from "react-router-dom";
 import { Toast } from "../components/Toast";
 import { MarineApis } from "../hooks/useMarineQuery";
+import { TrashInfoStore } from "../stores/TrashStore";
 import imageUrl from "../assets/UploadBackground.jpg"
 
 export const Ocean = () => {
   const [showSmartphone, setShowSmartphone] = useState(false);
   const [showToast, setShowToast] = useState(true);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [returndata, setReturndata] = useState();
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
@@ -47,8 +49,19 @@ export const Ocean = () => {
     }
 
     try {
+      // const resFriend = MarineApis.uploadFriend(formData);
+      // console.log(resFriend);
       const response = await MarineApis.upload(formData);
       console.log("Upload Response:", response);
+      const formattedData = response.map(item => ({
+        score: item.score,
+        total: item.total,
+        names: item.names.join(', '), // Assuming names is an array
+      }));
+      
+      setReturndata(formattedData);
+      console.log(formattedData);
+
       setShowSmartphone(true);
     } catch (error) {
       console.error('Error uploading file:', error);

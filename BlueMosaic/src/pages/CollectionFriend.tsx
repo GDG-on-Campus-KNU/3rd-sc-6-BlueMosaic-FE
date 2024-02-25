@@ -6,7 +6,7 @@ import { MiniFrameSVG } from "../components/dashboard/MiniFrameSVG"
 import HomeSVG from "../assets/HomeSVG.svg"
 import { MarineApis } from '../hooks/useMarineQuery';
 
-export const Collection = () => {
+export const CollectionFriend = () => {
   const [mediaData, setMediaData] = useState([]);
 
   useEffect(() => {

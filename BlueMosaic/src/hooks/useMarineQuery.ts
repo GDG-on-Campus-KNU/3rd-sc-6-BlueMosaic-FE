@@ -36,6 +36,18 @@ export const MarineApis = {
     }
   },
 
+    // 업로드하고 획득한 점수 확인하기
+    uploadFriend: async (formData: FormData) => {
+      try {
+        const res = await MarineApis.instance.post('/friend-dummy-marine', formData);
+        console.log(res);
+        return res.data;
+      } catch (error) {
+        alert(`[Can't recognize] Please add a clearer picture`)
+        throw error;
+      }
+    },
+
     // 주어진 ID의 해양 생물 정보를 수정
     update: async () => {
       try {
@@ -57,7 +69,19 @@ export const MarineApis = {
   // 사용자가 모은 해양 생물 정보를 조회
   getCollection: async () => {
     try {
-      const res = await MarineApis.instance.get(`/retrieve${UserInfoStore.getState().userId}`);
+      const res = await MarineApis.instance.get(`/retrieve/${UserInfoStore.getState().userId}`);
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      alert(`[Can't recognize] Please add `)
+      throw error;
+    }
+  }, 
+
+  // 사용자가 모은 해양 생물 정보를 조회
+  getCollectionDummy: async () => {
+    try {
+      const res = await MarineApis.instance.get(`/retrieve/${2}`);
       console.log(res);
       return res.data;
     } catch (error) {

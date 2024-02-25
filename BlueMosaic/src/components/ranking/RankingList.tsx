@@ -1,6 +1,7 @@
 import styled from "@emotion/styled"
 import { TrashInfoStore } from "../../stores/TrashStore";
 import { FriendInfoStore } from "../../stores/FriendStore";
+import { FriendApis } from "../../hooks/useFriendQuery";
 import { UserInfoStore } from "../../stores/UserInfoStore";
 import { RankingApis } from "../../hooks/useRankingQuery";
 import { useEffect, useState } from "react";
@@ -9,6 +10,8 @@ import { CircleSVG } from "./CircleSVG";
 export const RankingList = () => {
   const [data, setData] = useState([]);
   const [mydata, setMydata] = useState();
+  const [myfriend1, setMyfriend1] = useState();
+  const [myfriend2, setMyfriend2] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,11 +19,18 @@ export const RankingList = () => {
         const result = await RankingApis.get();
         setData(result);
           
+        // 본인 점수 찾기
         const currentUserId = UserInfoStore.getState().userId;
         const currentUserData = result.find(item => item.userId === currentUserId);
         setMydata(currentUserData);
-        console.log(currentUserData);
-        console.log(data);
+
+        // 친구 점수 찾기
+        const friends = await FriendApis.find();
+        // friends 2명의 id를 저장
+        const [friends1, friends2] = friends;
+        setMyfriend1(result.find(item => item.userId === friends1));
+        setMyfriend2(result.find(item => item.userId === friends2));
+        
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -69,24 +79,24 @@ export const RankingList = () => {
         <Mine>
           <Profile/>
           <div>
-            <span>이름</span>
-            <em>100P</em>
+            <span>{mydata && mydata.nickname}</span>
+            <em>{mydata && mydata.score}P</em>
           </div>
         </Mine>
 
         <Friend>
           <Profile/>
           <div>
-            <span>이름</span>
-            <em>100P</em>
+            <span>{myfriend1 && myfriend1.nickname}</span>
+            <em>{myfriend1 && myfriend1.score}P</em>
           </div>
         </Friend>
 
         <Friend>
           <Profile/>
           <div>
-            <span>이름</span>
-            <em>100P</em>
+            <span>{myfriend2 && myfriend2.nickname}</span>
+            <em>{myfriend2 && myfriend2.score}P</em>
           </div>
         </Friend>
       </RankingMine>

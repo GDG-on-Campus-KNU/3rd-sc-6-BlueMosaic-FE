@@ -62,7 +62,13 @@ export const Trash = () => {
       trashinfo.setTotalScore(response.total);
       trashinfo.setScore(response.score);
 
-      
+      const nonZeroProperties = Object.keys(response)
+      .filter(key => key !== "userId" && key !== "score" && key !== "total" && response[key] !== 0);
+    
+      const classes = nonZeroProperties.join(', ');
+
+      console.log(classes); // 결과: "plastic, styrofoam"
+      trashinfo.setClasses(classes);
 
       setShowFrame(true);
     } catch (error) {
@@ -95,7 +101,7 @@ export const Trash = () => {
           <Container>
             <PolaroidWrapper>
               {showFrame || <img src={PolaroidSVG} alt="PolaroidSVG" onClick={handleClick} />}
-              {showFrame && <Frame imageUrl={selectedImageUrl || ''} text="plastic bag" point={TrashInfoStore.getState().score}/>}
+              {showFrame && <Frame imageUrl={selectedImageUrl || ''} text={TrashInfoStore.getState().classes} point={TrashInfoStore.getState().score.toString()}/>}
               <form onSubmit={handleUpload}>
                 <input
                   id='image'
@@ -109,7 +115,7 @@ export const Trash = () => {
               </form>
               { showToast && !showFrame && <Toast found={'Information'} points={"Click the red button to upload the picture and get score points"} button1={"No thanks"} button2={"got it"} handleClickUpload={handleClickToast} handleGoto={handleClickToast}/> }
 
-              { showFrame && <Toast found={`I found ${",,,"}`} points={`My total  score is ${TrashInfoStore.getState().totalScore}`} handleClickUpload={handleClickUpload} handleGoto={handleGoto} button1={"Reupload"} button2={"Collection"} />}
+              { showFrame && <Toast found={`I found ${TrashInfoStore.getState().classes}`} points={`My total  score is ${TrashInfoStore.getState().totalScore}`} handleClickUpload={handleClickUpload} handleGoto={handleGoto} button1={"Reupload"} button2={"Collection"} />}
             </PolaroidWrapper>
           </Container>
         </Wrapper>
@@ -139,6 +145,7 @@ const StyledButton = styled.button`
   border: none; 
   border-radius: 4px; 
   cursor: pointer; 
+  margin-top: 1rem;
   
   &:hover {
     filter: brightness(70%);

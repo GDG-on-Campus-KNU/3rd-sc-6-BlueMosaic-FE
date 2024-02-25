@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { Toast } from "../components/Toast";
 import { MarineApis } from "../hooks/useMarineQuery";
 import { TrashInfoStore } from "../stores/TrashStore";
-import imageUrl from "../assets/UploadBackground.jpg"
 
 export const Ocean = () => {
   const [showSmartphone, setShowSmartphone] = useState(false);
@@ -52,12 +51,13 @@ export const Ocean = () => {
       // const resFriend = MarineApis.uploadFriend(formData);
       // console.log(resFriend);
       const response = await MarineApis.upload(formData);
+      console.log(response);
       console.log("Upload Response:", response);
-      const formattedData = response.map(item => ({
-        score: item.score,
-        total: item.total,
-        names: item.names.join(', '), // Assuming names is an array
-      }));
+      const formattedData = {
+        score: response.score,
+        total: response.total,
+        names: response.marinelife.map(item => item.name).join(', '),
+      };
       
       setReturndata(formattedData);
       console.log(formattedData);
@@ -73,7 +73,7 @@ export const Ocean = () => {
   };
 
   const handleClickUpload = () => {
-    setShowSmartphone(true);
+    setShowSmartphone(false);
   };
 
   const handleClick = () => {
@@ -97,8 +97,8 @@ export const Ocean = () => {
                 { 
                   showSmartphone ? (
                     <SmartphoneWrapper>
-                      <SmartphoneSVG handleClickParent="" imageUrl={imageUrl} />
-                      { showSmartphone && <Toast found={`I found ${"cod"}`} points={`My total  score is ${100}`} handleClickUpload={handleClickUpload} handleGoto={handleGoto} button1={"Reupload"} button2={"Collection"} />}
+                      <SmartphoneSVG handleClickParent="" imageUrl={selectedImageUrl} />
+                      { showSmartphone && <Toast found={`I found ${returndata && returndata.names}`} points={`My total  score is ${returndata && returndata.total}`} handleClickUpload={handleClickUpload} handleGoto={handleGoto} button1={"Reupload"} button2={"Collection"} />}
                     </SmartphoneWrapper>
                   ) : (
                     <CamWrapper>
@@ -159,6 +159,7 @@ const StyledButton = styled.button`
   border: none; 
   border-radius: 4px; 
   cursor: pointer; 
+  margin-top: 1rem;
   
   &:hover {
     filter: brightness(70%);

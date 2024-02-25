@@ -158,30 +158,30 @@ export const SmartphoneSVG = ({ handleClickParent, imageUrl }) => {
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_102_2637" result="shape"/>
 </filter>
 <linearGradient id="paint0_linear_102_2637" x1="48" y1="32" x2="48" y2="858" gradientUnits="userSpaceOnUse">
-<stop stop-opacity="0.01"/>
-<stop offset="1" stop-opacity="0.5"/>
+<stop stopOpacity="0.01"/>
+<stop offset="1" stopOpacity="0.5"/>
 </linearGradient>
 <linearGradient id="paint1_linear_102_2637" x1="143" y1="53" x2="143" y2="69" gradientUnits="userSpaceOnUse">
-<stop stop-opacity="0.3"/>
-<stop offset="0.48778" stopColor="#838383" stop-opacity="0.3"/>
-<stop offset="1" stop-opacity="0.3"/>
+<stop stopOpacity="0.3"/>
+<stop offset="0.48778" stopColor="#838383" stopOpacity="0.3"/>
+<stop offset="1" stopOpacity="0.3"/>
 </linearGradient>
 <linearGradient id="paint2_linear_102_2637" x1="146" y1="56" x2="146" y2="66" gradientUnits="userSpaceOnUse">
-<stop stop-opacity="0.3"/>
-<stop offset="0.48778" stopColor="#838383" stop-opacity="0.3"/>
-<stop offset="1" stop-opacity="0.3"/>
+<stop stopOpacity="0.3"/>
+<stop offset="0.48778" stopColor="#838383" stopOpacity="0.3"/>
+<stop offset="1" stopOpacity="0.3"/>
 </linearGradient>
 <radialGradient id="paint3_radial_102_2637" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(151 61) rotate(90) scale(3)">
 <stop/>
-<stop offset="1" stopColor="#637BB2" stop-opacity="0.529857"/>
+<stop offset="1" stopColor="#637BB2" stopOpacity="0.529857"/>
 </radialGradient>
 <linearGradient id="paint4_linear_102_2637" x1="142.131" y1="52" x2="142.131" y2="69.7373" gradientUnits="userSpaceOnUse">
-<stop stopColor="white" stop-opacity="0.05"/>
-<stop offset="1" stopColor="white" stop-opacity="0.1"/>
+<stop stopColor="white" stopOpacity="0.05"/>
+<stop offset="1" stopColor="white" stopOpacity="0.1"/>
 </linearGradient>
 <linearGradient id="paint5_linear_102_2637" x1="50.7732" y1="32" x2="50.7732" y2="845.944" gradientUnits="userSpaceOnUse">
-<stop stopColor="white" stop-opacity="0.01"/>
-<stop offset="1" stopColor="white" stop-opacity="0.03"/>
+<stop stopColor="white" stopOpacity="0.01"/>
+<stop offset="1" stopColor="white" stopOpacity="0.03"/>
 </linearGradient>
 </defs>
 </svg>

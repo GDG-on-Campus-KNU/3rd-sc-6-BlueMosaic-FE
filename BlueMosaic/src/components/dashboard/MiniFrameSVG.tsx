@@ -4,12 +4,12 @@ export const MiniFrameSVG = ({ handleCircleClickParent, imageUrl, date, text }) 
   const formattedDate = new Date(date).toISOString().split('T')[0];
 
   return (
-    <FrameWrapper>
+    <FrameWrapper onClick={handleCircleClickParent}>
       <img src={`data:image/png;base64, ${imageUrl}`} alt="img" />
       <span>{text}</span>
       <p>{formattedDate}</p>
     </FrameWrapper>
-    );
+  );
 }
 
 const FrameWrapper = styled.div`
@@ -21,6 +21,7 @@ justify-content: center;
 align-items: center;
 flex-shrink: 0;
 box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+cursor: pointer;
 
 img {
   flex: 1 0 0;

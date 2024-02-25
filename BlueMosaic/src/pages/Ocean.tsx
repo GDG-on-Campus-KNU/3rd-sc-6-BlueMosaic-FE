@@ -7,7 +7,7 @@ import { SmartphoneSVG } from "../components/SmartphoneSVG";
 import { useState, ChangeEvent, FormEvent, useRef } from "react"
 import { useNavigate } from "react-router-dom";
 import { Toast } from "../components/Toast";
-import { MediaApis } from "../hooks/useMediaQuery";
+import { MarineApis } from "../hooks/useMarineQuery";
 import imageUrl from "../assets/UploadBackground.jpg"
 
 export const Ocean = () => {
@@ -47,7 +47,7 @@ export const Ocean = () => {
     }
 
     try {
-      const response = await MediaApis.upload(formData);
+      const response = await MarineApis.upload(formData);
       console.log("Upload Response:", response);
       setShowSmartphone(true);
     } catch (error) {

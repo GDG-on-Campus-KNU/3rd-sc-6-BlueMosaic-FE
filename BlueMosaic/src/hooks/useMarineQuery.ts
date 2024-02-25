@@ -1,16 +1,16 @@
 import axios from 'axios';
 import { UserInfoStore } from '../stores/UserInfoStore';
 
-export const WasteApis = {
+export const MarineApis = {
   instance: axios.create({
-    baseURL: 'http://localhost:8080/marine',
+    baseURL: 'http://localhost:8080/marinelife',
     withCredentials: true,
   }),
 
   // 쓰레기 데이터 임시 생성하기
   create: async () => {
     try {
-      const res = await WasteApis.instance.post('/temp-data', {
+      const res = await MarineApis.instance.post('/temp-data', {
         "marineLifeId": 0,
         "userId": 0,
         "name": "string",
@@ -25,9 +25,9 @@ export const WasteApis = {
   },
 
   // 업로드하고 획득한 점수 확인하기
-  get: async (formData: FormData) => {
+  upload: async (formData: FormData) => {
     try {
-      const res = await WasteApis.instance.put('', formData);
+      const res = await MarineApis.instance.post('', formData);
       console.log(res);
       return res.data;
     } catch (error) {
@@ -39,7 +39,7 @@ export const WasteApis = {
     // 주어진 ID의 해양 생물 정보를 수정
     update: async () => {
       try {
-        const res = await WasteApis.instance.put('',{
+        const res = await MarineApis.instance.put('',{
           "marineLifeId": 0,
           "userId": 0,
           "name": "string",
@@ -57,7 +57,7 @@ export const WasteApis = {
   // 사용자가 모은 해양 생물 정보를 조회
   getCollection: async () => {
     try {
-      const res = await WasteApis.instance.get(`/retrieve${UserInfoStore.getState().userId}`);
+      const res = await MarineApis.instance.get(`/retrieve${UserInfoStore.getState().userId}`);
       console.log(res);
       return res.data;
     } catch (error) {

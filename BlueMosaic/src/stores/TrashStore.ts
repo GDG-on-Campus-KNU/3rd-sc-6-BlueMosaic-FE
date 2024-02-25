@@ -21,6 +21,8 @@ export interface TrashInfo {
   setScore: (score: TrashInfo['score']) => void;
   setTotalScore: (totalScore: TrashInfo['totalScore']) => void;
   setClass: (classes: TrashInfo['classes']) => void;
+
+  update: (field: string, value: string) => void;
 }
 
 const createTrashInfoStore = (set) => ({
@@ -40,7 +42,9 @@ const createTrashInfoStore = (set) => ({
   setGeneralWaste: (generalWaste: TrashInfo['generalWaste']) => set({ generalWaste }),
   setScore: (score: TrashInfo['score']) => set({ score }),
   setTotalScore: (totalScore: TrashInfo['totalScore']) => set({ totalScore }),
-  setClass: (classes: string) => set({ classes })
+  setClass: (classes: string) => set({ classes }),
+
+  update: (field, value) => set({ [field]: value }),
 });
 
 let TrashInfoStoreTemp;

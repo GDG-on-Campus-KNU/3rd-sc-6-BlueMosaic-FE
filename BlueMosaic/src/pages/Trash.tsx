@@ -53,12 +53,16 @@ export const Trash = () => {
       //test
       //WasteApis.create();
       // console.log("Upload Response:", response);
+
       trashinfo.setPlastic(response.plastic);
       trashinfo.setStyrofoam(response.styrofoam);
       trashinfo.setFiber(response.fiber);
       trashinfo.setVinyl(response.vinyl);
-      trashinfo.generalWaste(response.generalWaste);
-      console.log(trashinfo);
+      trashinfo.setGeneralWaste(response.generalWaste);
+      trashinfo.setTotalScore(response.total);
+      trashinfo.setScore(response.score);
+
+      
 
       setShowFrame(true);
     } catch (error) {
@@ -91,7 +95,7 @@ export const Trash = () => {
           <Container>
             <PolaroidWrapper>
               {showFrame || <img src={PolaroidSVG} alt="PolaroidSVG" onClick={handleClick} />}
-              {showFrame && <Frame imageUrl={selectedImageUrl || ''} text="plastic bag" point='100'/>}
+              {showFrame && <Frame imageUrl={selectedImageUrl || ''} text="plastic bag" point={TrashInfoStore.getState().score}/>}
               <form onSubmit={handleUpload}>
                 <input
                   id='image'
@@ -105,7 +109,7 @@ export const Trash = () => {
               </form>
               { showToast && !showFrame && <Toast found={'Information'} points={"Click the red button to upload the picture and get score points"} button1={"No thanks"} button2={"got it"} handleClickUpload={handleClickToast} handleGoto={handleClickToast}/> }
 
-              { showFrame && <Toast found={`I found ${"plastic bag"}`} points={`My total  score is ${100}`} handleClickUpload={handleClickUpload} handleGoto={handleGoto} button1={"Reupload"} button2={"Collection"} />}
+              { showFrame && <Toast found={`I found ${",,,"}`} points={`My total  score is ${TrashInfoStore.getState().totalScore}`} handleClickUpload={handleClickUpload} handleGoto={handleGoto} button1={"Reupload"} button2={"Collection"} />}
             </PolaroidWrapper>
           </Container>
         </Wrapper>

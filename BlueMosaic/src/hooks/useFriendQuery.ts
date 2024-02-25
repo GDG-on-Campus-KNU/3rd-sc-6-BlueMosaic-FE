@@ -18,7 +18,7 @@ export const FriendApis = {
       return res.data;
     } catch (error) {
       // 이미 친구가 되어있는 경우
-      console.error('이미 친구가 되어있습니다 :', error);
+      console.error(' :', error);
       throw error;
     }
   },

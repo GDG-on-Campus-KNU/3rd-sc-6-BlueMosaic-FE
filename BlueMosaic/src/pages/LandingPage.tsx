@@ -32,24 +32,24 @@ export const LandingPage = () => {
     // 클릭할 때마다 제목과 부제 변경
     if (clicked === 0) {
       setContentInfo({
-        title: "New Title 1",
-        subtitle: "New Subtitle 1",
+        title: "Life Below Water(14)",
+        subtitle: "Our project encourages the elimination of waste existing on the coast,\n which will enable sustainable use of the ocean.",
       });
     } else if (clicked === 1) {
       setContentInfo({
-        title: "New Title 2",
-        subtitle: "New Subtitle 2",
+        title: "Life on land(15)",
+        subtitle: "Our project receives photos of people working with marine life from users.\nWe think this will be a means to identify exotic or dangerous species and provide data\nto identify ecosystems that can be accessed by humans.",
       });
     } else if (clicked === 2) {
       setContentInfo({
-        title: "New Title 3",
-        subtitle: "New Subtitle 3",
+        title: "",
+        subtitle: "",
       });
     }
   };
 
   const handleClickWatch = () => {
-    const youtubeLink = "https://www.youtube.com/your_video_link_here";
+    const youtubeLink = "https://youtu.be/8-GOBfm61XA";
     window.open(youtubeLink, "_blank");
   }
 
@@ -60,7 +60,7 @@ export const LandingPage = () => {
   const [contentInfo, setContentInfo] = useState({
     title: "GDSC SC3 BlueMosaic",
     subtitle:
-      "From the small stuff to the big picture,\norganizes the work so teams know what to do.",
+      "Protect marine ecosystems with pictures,\nPurify and gather marine ecosystems with pictures all together.",
   });
 
 return(  
@@ -140,6 +140,7 @@ const ContentWrapper = styled.div`
     font-style: normal;
     line-height: 1.75rem;
     margin-bottom: 2rem;
+    white-space: pre-line;
   }
 `;
 

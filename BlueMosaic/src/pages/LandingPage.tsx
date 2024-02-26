@@ -49,7 +49,7 @@ export const LandingPage = () => {
   };
 
   const handleClickWatch = () => {
-    const youtubeLink = "https://youtu.be/8-GOBfm61XA";
+    const youtubeLink = "https://youtu.be/w9DMoIpzgzk";
     window.open(youtubeLink, "_blank");
   }
 
